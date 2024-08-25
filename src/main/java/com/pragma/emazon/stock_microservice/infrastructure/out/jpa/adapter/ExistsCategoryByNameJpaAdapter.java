@@ -9,7 +9,7 @@ public class ExistsCategoryByNameJpaAdapter implements IExistsCategoryByNamePers
     private final ICategoryRepository categoryRepository;
 
     @Override
-    public boolean existsCategoryByName(String name) {
+    public Boolean existsCategoryByName(String name) {
         return categoryRepository.existsByName(name);
     }
 }

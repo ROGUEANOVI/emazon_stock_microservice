@@ -30,7 +30,7 @@ class ExistsCategoryByNameJpaAdapterTest {
         when(categoryRepository.existsByName(anyString())).thenReturn(true);
 
         // Act
-        boolean result = existsCategoryByNameJpaAdapter.existsCategoryByName("ExistingCategory");
+        Boolean result = existsCategoryByNameJpaAdapter.existsCategoryByName("ExistingCategory");
 
         // Assert
         assertTrue(result);
@@ -42,7 +42,7 @@ class ExistsCategoryByNameJpaAdapterTest {
         when(categoryRepository.existsByName(anyString())).thenReturn(false);
 
         // Act
-        boolean result = existsCategoryByNameJpaAdapter.existsCategoryByName("NonExistingCategory");
+        Boolean result = existsCategoryByNameJpaAdapter.existsCategoryByName("NonExistingCategory");
 
         // Assert
         assertFalse(result);
