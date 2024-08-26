@@ -29,7 +29,7 @@ public class CreateCategoryUseCase implements ICreateCategoryServicePort {
             throw new CategoryBadRequestException(errors);
         }
 
-        if (existsCategoryByNamePersistencePort.existsCategoryByName(category.getName())) {
+        if (Boolean.TRUE.equals(existsCategoryByNamePersistencePort.existsCategoryByName(category.getName()))) {
             throw new CategoryAlreadyExistsException(CategoryExceptionMessages.CATEGORY_ALREADY_EXISTS);
         }
 
