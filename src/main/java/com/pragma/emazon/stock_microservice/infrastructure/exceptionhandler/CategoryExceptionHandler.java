@@ -16,7 +16,7 @@ import java.util.Map;
 @ControllerAdvice
 public class CategoryExceptionHandler {
     @ExceptionHandler(CategoryBadRequestException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidCategoryException(CategoryBadRequestException ex) {
+    public ResponseEntity<Map<String, String>> handleCategoryBadRequestException(CategoryBadRequestException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getErrors().forEach(error -> errors.put(error.keySet().iterator().next(), error.values().iterator().next()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
