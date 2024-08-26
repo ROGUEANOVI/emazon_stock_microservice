@@ -81,7 +81,6 @@ class ListCategoriesJpaAdapterTest {
         GenericPagination<Category> result = listCategoriesJpaAdapter.listCategories(1, 10, "DESC");
 
         // Assert
-        // Assert
         verify(categoryRepository).findAll(pageable);
         verify(pageCategoryEntityMapper).toGenericPaginationCategory(categoryEntityPage);
         assertEquals(genericPagination, result);

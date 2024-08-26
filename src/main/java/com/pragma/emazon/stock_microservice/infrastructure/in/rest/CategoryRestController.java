@@ -53,8 +53,8 @@ public class CategoryRestController {
     })
     @GetMapping
     public ResponseEntity<PaginatedResponse<CategoryResponse>> listCategories(
-            @RequestParam(defaultValue = DEFAULT_PAGE_VALUE) @Min(value = 1, message = INVALID_PAGE_VALUE) Integer page,
-            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_VALUE) @Positive @Min(value = 1, message = INVALID_PAGE_ITEMS_NUMBER) Integer size,
+            @RequestParam(defaultValue = DEFAULT_PAGE_VALUE) @Positive(message = INVALID_PAGE_VALUE) @Min(value = 1, message = INVALID_PAGE_VALUE) Integer page,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_VALUE) @Positive(message = INVALID_PAGE_ITEMS_NUMBER ) @Min(value = 1, message = INVALID_PAGE_ITEMS_NUMBER) Integer size,
             @RequestParam(defaultValue = DEFAULT_SORT_DIRECTION_VALUE) @Pattern(regexp = "(?i)^(asc|desc)$", message = INVALID_SORT_DIRECTION) String direction) {
 
         PaginatedResponse<CategoryResponse> categoryResponseList = listCategoriesHandler.listCategories(page, size, direction);

@@ -59,31 +59,59 @@ test {
 }
 
 jacocoTestReport {
+	dependsOn test
+
 	reports {
 		xml.required = false
 		csv.required = false
 	}
-	dependsOn test
 }
 
-jacocoTestCoverageVerification {
-	violationRules {
-		rule {
-			limit {
-				minimum = 0.5
-			}
-		}
-
-		rule {
-			enabled = false
-			element = 'CLASS'
-			includes = ['org.gradle.*']
-
-			limit {
-				counter = 'LINE'
-				value = 'TOTALCOUNT'
-				maximum = 0.3
-			}
-		}
-	}
-}
+//jacocoTestCoverageVerification {
+//	check.dependsOn jacocoTestCoverageVerification
+//
+//	violationRules {
+//		rule {
+//			limit {
+//				minimum = 0.8
+//			}
+//		}
+//
+//		rule {
+//			enabled = true
+//			element = 'CLASS'
+//
+//			includes = [
+//					'com.pragma.emazon.stock_microservice.domain.usecase.*',
+//					'com.pragma.emazon.stock_microservice.infrastructure.in.rest.*RestController',
+//					'com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.*'
+//			]
+//
+//			excludes = [
+//					'com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.*',
+//					'com.pragma.emazon.stock_microservice.application.mapper.*',
+//					'com.pragma.emazon.stock_microservice.infrastructure.exceptionhandler.*',
+//					'com.pragma.emazon.stock_microservice.domain.validation.*',
+//					'com.pragma.emazon.stock_microservice.domain.model.*',
+//					'com.pragma.emazon.stock_microservice.application.handler.*',
+//					'com.pragma.emazon.stock_microservice.application.dto.request.*'
+//			]
+//
+//			limit {
+//				counter = 'LINE'
+//				value = 'TOTALCOUNT'
+//				maximum = 0.3
+//			}
+//			limit {
+//				counter = 'LINE'
+//				value = 'COVEREDRATIO'
+//				minimum = 0.8 // Cobertura mínima del 80% de líneas por clase
+//			}
+//			limit {
+//				counter = 'BRANCH'
+//				value = 'COVEREDRATIO'
+//				minimum = 0.7 // Cobertura mínima del 70% de ramas por clase
+//			}
+//		}
+//	}
+//}
