@@ -1,0 +1,36 @@
+package com.pragma.emazon.stock_microservice.domain.constant;
+
+public class ArticleValidationMessages {
+    public static final String TABLE_NAME = "article";
+    public static final String TABLE_NAME_MANY_TO_MANY = "article_category";
+    public static final String FIELD_ARTICLE_ID = "article_id";
+    public static final String FIELD_NAME = "name";
+    public static final String FIELD_DESCRIPTION = "description";
+    public static final String FIELD_QUANTITY = "quantity";
+    public static final String FIELD_PRICE = "price";
+    public static final String FIELD_BRAND = "brand";
+    public static final String FIELD_BRAND_ID = "brand_id";
+    public static final String FIELD_CATEGORIES = "categories";
+    public static final String FIELD_CATEGORY_ID = "category_id";
+
+    public static final int MAXIMUM_CHARACTERS_ARTICLE_NAME = 100;
+    public static final int MAXIMUM_CHARACTERS_ARTICLE_DESCRIPTION = 500;
+
+    public static final int MINIMUM_QUANTITY_VALUE = 1;
+    public static final String MINIMUM_PRICE_VALUE = "0.01";
+
+    public static final String INVALID_ARTICLE_NAME_NULL = "Article name cannot be null";
+    public static final String INVALID_ARTICLE_NAME_SIZE = "Article name cannot be longer than 100 characters";
+    public static final String INVALID_ARTICLE_NAME_EMPTY_OR_BLANK = "Article name cannot be empty or only blank characters";
+
+    public static final String INVALID_ARTICLE_DESCRIPTION_NULL = "Article description cannot be null";
+    public static final String INVALID_ARTICLE_DESCRIPTION_SIZE = "Article description cannot be longer than 500 characters";
+    public static final String INVALID_ARTICLE_DESCRIPTION_EMPTY_OR_BLANK = "Article description cannot be empty or only blank characters";
+
+    public static final String INVALID_ARTICLE_QUANTITY = "Article quantity cannot be null or less than 1";
+    public static final String INVALID_ARTICLE_PRICE = "Article price cannot be null or less than 0.01";
+    public static final String INVALID_ARTICLE_BRAND = "Article brand cannot be null";
+    public static final String INVALID_ARTICLE_CATEGORIES = "Article must have between 1 and 3 categories";
+
+    private ArticleValidationMessages() {}
+}

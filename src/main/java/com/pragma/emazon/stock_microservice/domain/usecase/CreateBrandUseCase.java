@@ -30,7 +30,7 @@ public class CreateBrandUseCase implements ICreateBrandServicePort {
         }
 
         if (Boolean.TRUE.equals(existsBrandByNamePersistencePort.existsBrandByName(brand.getName()))) {
-            throw new BrandAlreadyExistsException(BrandExceptionMessages.BRAND_ALREADY_EXISTS);
+            throw new BrandAlreadyExistsException(BrandExceptionMessages.BRAND_ALREADY_EXISTS, brand.getName());
         }
 
         this.createBrandPersistencePort.createBrand(brand);

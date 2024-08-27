@@ -3,6 +3,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.exceptionhandler;
 import com.pragma.emazon.stock_microservice.domain.constant.BrandExceptionMessages;
 import com.pragma.emazon.stock_microservice.domain.exception.BrandAlreadyExistsException;
 import com.pragma.emazon.stock_microservice.domain.exception.BrandBadRequestException;
+import com.pragma.emazon.stock_microservice.domain.exception.BrandNotFoundException;
 import com.pragma.emazon.stock_microservice.domain.exception.NoDataFoundBrandException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,11 @@ public class BrandExceptionHandler {
     @ExceptionHandler(BrandAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleBrandAlReadyExistsException(BrandAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
+    }
+
+    @ExceptionHandler(BrandNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleBrandNotFoundException(BrandNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(NoDataFoundBrandException.class)
