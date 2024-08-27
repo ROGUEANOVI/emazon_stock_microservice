@@ -23,7 +23,3 @@ springdoc:
     path: /swagger-ui.html
   api-docs:
     path: /api-docs
-
-
-description: "Emazon Stock Microservice"
-version: "1.0.0"

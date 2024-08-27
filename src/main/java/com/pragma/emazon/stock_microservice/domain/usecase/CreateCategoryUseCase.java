@@ -30,7 +30,7 @@ public class CreateCategoryUseCase implements ICreateCategoryServicePort {
         }
 
         if (Boolean.TRUE.equals(existsCategoryByNamePersistencePort.existsCategoryByName(category.getName()))) {
-            throw new CategoryAlreadyExistsException(CategoryExceptionMessages.CATEGORY_ALREADY_EXISTS);
+            throw new CategoryAlreadyExistsException(CategoryExceptionMessages.CATEGORY_ALREADY_EXISTS, category.getName());
         }
 
         this.createCategoryPersistencePort.createCategory(category);

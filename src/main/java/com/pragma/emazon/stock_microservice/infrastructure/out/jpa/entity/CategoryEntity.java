@@ -1,6 +1,5 @@
 package com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity;
 
-import com.pragma.emazon.stock_microservice.domain.constant.CategoryValidationMessages;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -10,8 +9,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import static com.pragma.emazon.stock_microservice.domain.constant.CategoryValidationMessages.*;
+
 @Entity
-@Table(name = "category")
+@Table(name = TABLE_NAME)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -21,15 +22,15 @@ public class CategoryEntity {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = CategoryValidationMessages.MAXIMUM_CHARACTERS_CATEGORY_NAME)
-    @NotBlank(message = CategoryValidationMessages.INVALID_CATEGORY_NAME_EMPTY_OR_BLANK)
-    @NotEmpty(message = CategoryValidationMessages.INVALID_CATEGORY_NAME_EMPTY_OR_BLANK)
-    @Column(name = "name", nullable = false, unique = true)
+    @Size(max = MAXIMUM_CHARACTERS_CATEGORY_NAME, message = INVALID_CATEGORY_NAME_SIZE)
+    @NotBlank(message = INVALID_CATEGORY_NAME_EMPTY_OR_BLANK)
+    @NotEmpty(message = INVALID_CATEGORY_NAME_EMPTY_OR_BLANK)
+    @Column(name = FIELD_NAME, nullable = false, unique = true)
     private String name;
 
-    @Size(max = CategoryValidationMessages.MAXIMUM_CHARACTERS_CATEGORY_DESCRIPTION)
-    @NotBlank(message = CategoryValidationMessages.INVALID_CATEGORY_DESCRIPTION_EMPTY_OR_BLANK)
-    @NotEmpty(message = CategoryValidationMessages.INVALID_CATEGORY_DESCRIPTION_EMPTY_OR_BLANK)
-    @Column(name = "description", nullable = false)
+    @Size(max = MAXIMUM_CHARACTERS_CATEGORY_DESCRIPTION, message = INVALID_CATEGORY_DESCRIPTION_SIZE)
+    @NotBlank(message = INVALID_CATEGORY_DESCRIPTION_EMPTY_OR_BLANK)
+    @NotEmpty(message = INVALID_CATEGORY_DESCRIPTION_EMPTY_OR_BLANK)
+    @Column(name = FIELD_DESCRIPTION, nullable = false)
     private String description;
 }
