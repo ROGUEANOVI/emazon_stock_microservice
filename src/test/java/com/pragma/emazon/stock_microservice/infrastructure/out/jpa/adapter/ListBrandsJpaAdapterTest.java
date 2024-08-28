@@ -2,7 +2,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter;
 
 import com.pragma.emazon.stock_microservice.domain.model.Brand;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.constant.PropertyNames;
+import com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.BrandEntity;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.PageBrandEntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.repository.IBrandRepository;
@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ListBrandsJpaAdapterTest {
+
     @Mock
     private IBrandRepository brandRepository;
 
@@ -38,6 +39,7 @@ class ListBrandsJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         Brand brand = new Brand(null, "Koaj", "description koaj");
         pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PropertyNames.NAME));
         genericPagination = new GenericPagination<>(
@@ -56,6 +58,7 @@ class ListBrandsJpaAdapterTest {
 
     @Test
     void listBrandsShouldReturnCustomPageWhenDataIsAvailable() {
+
         // Arrange
         pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PropertyNames.NAME));
         when(brandRepository.findAll(pageable)).thenReturn(brandEntityPage);
@@ -72,6 +75,7 @@ class ListBrandsJpaAdapterTest {
 
     @Test
     void listBrandsShouldUseCorrectSortingWhenDirectionIsGiven() {
+
         // Arrange
         when(brandRepository.findAll(any(Pageable.class))).thenReturn(brandEntityPage);
         when(pageBrandEntityMapper.toGenericPaginationBrand(any(Page.class))).thenReturn(genericPagination);

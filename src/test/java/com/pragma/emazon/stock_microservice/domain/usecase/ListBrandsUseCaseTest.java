@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ListBrandsUseCaseTest {
+
     @Mock
     private IListBrandsPersistencePort listBrandsPersistencePort;
 
@@ -32,6 +33,7 @@ class ListBrandsUseCaseTest {
 
     @BeforeEach
     void setUp() {
+
         brand = new Brand(null, "Koaj", "Brands of Koaj");
         genericPagination = new GenericPagination<>(
                 List.of(brand), // Content
@@ -46,6 +48,7 @@ class ListBrandsUseCaseTest {
 
     @Test
     void listBrandsShouldReturnCustomPageWhenDataIsPresent() {
+
         // Arrange
         when(listBrandsPersistencePort.listBrand(1, 10, "asc")).thenReturn(genericPagination);
 
@@ -67,6 +70,7 @@ class ListBrandsUseCaseTest {
 
     @Test
     void listBrandShouldThrowNoDataFoundBrandExceptionWhenNoDataIsPresent() {
+
         // Arrange
         GenericPagination<Brand> emptyGenericPagination = new GenericPagination<>(
                 Collections.emptyList(), // Content
@@ -90,6 +94,7 @@ class ListBrandsUseCaseTest {
 
     @Test
     void listBrandsShouldInvokePersistencePortWithCorrectParameters() {
+
         // Arrange
         when(listBrandsPersistencePort.listBrand(1, 20, "desc")).thenReturn(genericPagination);
 

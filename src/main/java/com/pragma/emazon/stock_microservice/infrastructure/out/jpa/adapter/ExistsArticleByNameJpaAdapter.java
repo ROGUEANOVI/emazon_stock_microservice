@@ -6,10 +6,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ExistsArticleByNameJpaAdapter implements IExistsArticleByNamePersistencePort {
+
     private final IArticleRepository articleRepository;
 
     @Override
     public Boolean existsArticleByName(String name) {
+
         return articleRepository.existsByName(name);
     }
 }

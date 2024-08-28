@@ -21,6 +21,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
 class CreateArticleJpaAdapterTest {
+
     @Mock
     private IArticleRepository articleRepository;
 
@@ -32,11 +33,13 @@ class CreateArticleJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void createArticleShouldCallSaveOnRepository() {
+
         // Arrange
         Article article = new Article(
                 null,
@@ -61,6 +64,7 @@ class CreateArticleJpaAdapterTest {
 
     @Test
     void createArticleShouldThrowExceptionWhenRepositoryFails() {
+
         // Arrange
         Article article = new Article(
                 null,

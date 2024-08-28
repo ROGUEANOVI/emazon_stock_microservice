@@ -10,11 +10,13 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 public class FindBrandByIdJpaAdapter implements IFindBrandByIdPersistencePort {
+
     private final IBrandRepository brandRepository;
     private final EntityMapper entityMapper;
 
     @Override
     public Optional<Brand> findBrandById(Long id) {
+
         return brandRepository.findById(id).map(entityMapper::toBrand);
     }
 }

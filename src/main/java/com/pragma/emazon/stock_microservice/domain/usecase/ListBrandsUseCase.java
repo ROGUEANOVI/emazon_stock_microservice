@@ -8,14 +8,17 @@ import com.pragma.emazon.stock_microservice.domain.port.api.IListBrandsServicePo
 import com.pragma.emazon.stock_microservice.domain.port.spi.IListBrandsPersistencePort;
 
 public class ListBrandsUseCase implements IListBrandsServicePort {
+
     private final IListBrandsPersistencePort listCategoriesPersistencePort;
 
     public ListBrandsUseCase(IListBrandsPersistencePort listCategoriesPersistencePort) {
+
         this.listCategoriesPersistencePort = listCategoriesPersistencePort;
     }
 
     @Override
     public GenericPagination<Brand> listBrands(Integer page, Integer size, String direction) {
+
         GenericPagination<Brand> listBrands = listCategoriesPersistencePort.listBrand(page, size, direction);
 
         if (listBrands.getTotalElements() == 0) {

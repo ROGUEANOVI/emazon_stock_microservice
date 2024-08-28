@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArticleBadRequestException extends RuntimeException {
+
     private final List<Map<String, String>> errors;
 
     public ArticleBadRequestException(List<Map<String, String>> errors) {

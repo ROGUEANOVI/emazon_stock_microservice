@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
 class FindCategoryByIdJpaAdapterTest {
+
     @Mock
     private ICategoryRepository categoryRepository;
 
@@ -33,6 +34,7 @@ class FindCategoryByIdJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
 
         category = new Category(1L, "Test Category", "Test Description");
@@ -41,6 +43,7 @@ class FindCategoryByIdJpaAdapterTest {
 
     @Test
     void testFindCategoryById_WhenCategoryExists() {
+
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(categoryEntity));
         when(entityMapper.toCategory(categoryEntity)).thenReturn(category);
 
@@ -53,6 +56,7 @@ class FindCategoryByIdJpaAdapterTest {
 
     @Test
     void testFindCategoryById_WhenCategoryDoesNotExist() {
+
         when(categoryRepository.findById(1L)).thenReturn(Optional.empty());
 
         Optional<Category> result = findCategoryByIdJpaAdapter.findCategoryById(1L);

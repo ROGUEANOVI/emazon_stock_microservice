@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class CategoryRestControllerTest {
+
     @Mock
     private ICreateCategoryHandler createCategoryHandler;
 
@@ -31,6 +32,7 @@ class CategoryRestControllerTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
         CategoryResponse categoryResponse = new CategoryResponse(1L, "Electronics", "Devices and gadgets");
         List<CategoryResponse> categoryResponseList = List.of(categoryResponse);
@@ -39,6 +41,7 @@ class CategoryRestControllerTest {
 
     @Test
     void createCategoryShouldReturnCreatedStatus() {
+
         // Arrange
         CreateCategoryRequest request = new CreateCategoryRequest("NewCategory", "CategoryDescription");
 
@@ -54,6 +57,7 @@ class CategoryRestControllerTest {
 
     @Test
     void listCategoriesShouldReturnPaginatedResponse() {
+
         // Arrange
         Integer page = 1;
         Integer size = 10;

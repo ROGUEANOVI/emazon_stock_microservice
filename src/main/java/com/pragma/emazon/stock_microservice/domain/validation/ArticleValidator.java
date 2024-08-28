@@ -12,9 +12,11 @@ import java.util.Map;
 import static com.pragma.emazon.stock_microservice.domain.constant.ArticleValidationMessages.*;
 
 public class ArticleValidator {
+
     private ArticleValidator() {}
 
     public static List<Map<String, String>> validate(Article article){
+
         List<Map<String, String>> errors = new ArrayList<>();
 
         validateName(article.getName(), errors);
@@ -28,6 +30,7 @@ public class ArticleValidator {
     }
 
     private static void validateName (String name, List<Map<String, String>> errors){
+
         if (name == null) {
             errors.add(Map.of(FIELD_NAME, INVALID_ARTICLE_NAME_NULL));
         } else if (name.isBlank()) {
@@ -38,6 +41,7 @@ public class ArticleValidator {
     }
 
     private static void validateDescription(String description, List<Map<String, String>> errors) {
+
         if (description == null) {
             errors.add(Map.of(FIELD_DESCRIPTION, INVALID_ARTICLE_DESCRIPTION_NULL));
         } else if (description.isBlank()) {
@@ -48,25 +52,29 @@ public class ArticleValidator {
     }
 
     private static void validateQuantity (Long quantity, List<Map<String, String>> errors){
-        if (quantity == null || quantity <= 0) {
+
+        if (quantity == null || quantity < MINIMUM_QUANTITY_VALUE) {
             errors.add(Map.of(FIELD_QUANTITY, INVALID_ARTICLE_QUANTITY));
         }
     }
 
     private static void validatePrice (BigDecimal price, List<Map<String, String>> errors){
-        if (price == null || price.compareTo(BigDecimal.valueOf(0.01)) < 0) {
+
+        if (price == null || price.compareTo(MINIMUM_PRICE_VALUE) < ZERO_VALUE) {
             errors.add(Map.of(FIELD_PRICE, INVALID_ARTICLE_PRICE));
         }
     }
 
     private static void validateBrand (Brand brand, List<Map<String, String>> errors){
+
         if (brand == null) {
             errors.add(Map.of(FIELD_BRAND, INVALID_ARTICLE_BRAND));
         }
     }
 
     private static void validateCategories (List <Category> categories, List<Map<String, String>> errors) {
-        if (categories == null || categories.isEmpty() || categories.size() > 3) {
+
+        if (categories == null || categories.isEmpty() || categories.size() > THREE_VALUE) {
             errors.add(Map.of(FIELD_CATEGORIES, INVALID_ARTICLE_CATEGORIES));
         }
     }

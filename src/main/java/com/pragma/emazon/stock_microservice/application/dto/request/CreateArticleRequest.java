@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CreateArticleRequest {
+
     private String name;
     private String description;
     private Long quantity;

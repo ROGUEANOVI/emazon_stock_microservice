@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class OpenApiInformation {
+
     public static final String TITLE = "Emazon Stock Management API";
     public static final String VERSION = "1.0.0";
     public static final String DESCRIPTION = "This is the Stock Management Microservice for the Emazon application. It provides endpoints for managing categories, brands, and articles within the inventory system. Use this API to handle stock-related operations, such as adding new items, updating existing ones, and retrieving information about categories and brands.";

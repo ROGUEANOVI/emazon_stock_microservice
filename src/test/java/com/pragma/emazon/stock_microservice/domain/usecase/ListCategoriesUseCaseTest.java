@@ -33,6 +33,7 @@ class ListCategoriesUseCaseTest {
 
     @BeforeEach
     void setUp() {
+
         category = new Category(null, "Electronics", "Gadgets and devices");
         genericPagination = new GenericPagination<>(
                 List.of(category), // Content
@@ -47,6 +48,7 @@ class ListCategoriesUseCaseTest {
 
     @Test
     void listCategoriesShouldReturnCustomPageWhenDataIsPresent() {
+
         // Arrange
         when(listCategoriesPersistencePort.listCategories(1, 10, "asc")).thenReturn(genericPagination);
 
@@ -68,6 +70,7 @@ class ListCategoriesUseCaseTest {
 
     @Test
     void listCategoriesShouldThrowNoDataFoundCategoryExceptionWhenNoDataIsPresent() {
+
         // Arrange
         GenericPagination<Category> emptyGenericPagination = new GenericPagination<>(
                 Collections.emptyList(), // Content
@@ -91,6 +94,7 @@ class ListCategoriesUseCaseTest {
 
     @Test
     void listCategoriesShouldInvokePersistencePortWithCorrectParameters() {
+
         // Arrange
         when(listCategoriesPersistencePort.listCategories(1, 20, "desc")).thenReturn(genericPagination);
 

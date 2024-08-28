@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreateCategoryUseCaseTest {
+
     @Mock
     private ICreateCategoryPersistencePort createCategoryPersistencePort;
 
@@ -37,11 +38,13 @@ class CreateCategoryUseCaseTest {
 
     @BeforeEach
     void setUp() {
+
         category = new Category(1L, "Skin care", "Articles to care for and beautify the skin");
     }
 
     @Test
     void shouldThrowExceptionWhenCategoryIsInvalid() {
+
         // Arrange
         Category invalidCategory = new Category(null, "", "");
         List<Map<String, String>> errors = List.of(Map.of("name", "Category name cannot be blank"));
@@ -60,6 +63,7 @@ class CreateCategoryUseCaseTest {
 
     @Test
     void shouldCreateCategorySuccessfully() {
+
         // Arrange
         when(existsCategoryByNamePersistencePort.existsCategoryByName(category.getName())).thenReturn(false);
 
@@ -72,6 +76,7 @@ class CreateCategoryUseCaseTest {
 
     @Test
     void shouldThrowCategoryAlreadyExistsException() {
+
         // Arrange
         when(existsCategoryByNamePersistencePort.existsCategoryByName(category.getName())).thenReturn(true);
 

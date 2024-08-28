@@ -1,4 +1,4 @@
-package com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant;
+package com.pragma.emazon.stock_microservice.infrastructure.constant;
 
 import lombok.NoArgsConstructor;
 
@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class BrandApiResponses {
+
     public static final String DESCRIPTION_200 = "Brand or brands ok";
     public static final String DESCRIPTION_201 = "Brand created";
     public static final String DESCRIPTION_409 = "Brand already exists";

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Article {
+
     private Long id;
     private String name;
     private String description;

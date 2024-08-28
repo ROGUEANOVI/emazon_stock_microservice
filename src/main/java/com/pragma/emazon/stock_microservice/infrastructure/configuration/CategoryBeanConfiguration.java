@@ -20,32 +20,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class CategoryBeanConfiguration {
+
     private final ICategoryRepository categoryRepository;
     private final EntityMapper entityMapper;
     private final PageCategoryEntityMapper pageCategoryEntityMapper;
 
     @Bean
     public ICreateCategoryPersistencePort createCategoryPersistencePort() {
+
         return new CreateCategoryJpaAdapter(categoryRepository, entityMapper);
     }
 
     @Bean
     public IExistsCategoryByNamePersistencePort existsCategoryByNamePersistencePort() {
+
         return new ExistsCategoryByNameJpaAdapter(categoryRepository);
     }
 
     @Bean
     public ICreateCategoryServicePort createCategoryServicePort() {
+
         return new CreateCategoryUseCase(createCategoryPersistencePort(), existsCategoryByNamePersistencePort());
     }
 
     @Bean
     public IListCategoriesPersistencePort listCategoriesPersistencePort() {
+
         return new ListCategoriesJpaAdapter(categoryRepository, pageCategoryEntityMapper);
     }
 
     @Bean
     public IListCategoriesServicePort listCategoriesServicePort() {
+
         return new ListCategoriesUseCase(listCategoriesPersistencePort());
     }
 }

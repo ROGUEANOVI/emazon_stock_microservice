@@ -12,8 +12,10 @@ import static com.pragma.emazon.stock_microservice.infrastructure.constant.OpenA
 
 @Configuration
 public class OpenApiConfiguration {
+
     @Bean
     public OpenAPI customOpenApi(){
+
         return new OpenAPI()
             .components(new Components())
             .info(

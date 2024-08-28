@@ -8,11 +8,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class CreateCategoryJpaAdapter implements ICreateCategoryPersistencePort {
+
     private final ICategoryRepository categoryRepository;
     private final EntityMapper entityMapper;
 
     @Override
     public void createCategory(Category category) {
+
         categoryRepository.save(entityMapper.toCategoryEntity(category));
     }
 }

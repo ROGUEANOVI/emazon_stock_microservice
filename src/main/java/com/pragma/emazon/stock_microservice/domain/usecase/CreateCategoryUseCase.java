@@ -13,16 +13,19 @@ import java.util.List;
 import java.util.Map;
 
 public class CreateCategoryUseCase implements ICreateCategoryServicePort {
+
     private final ICreateCategoryPersistencePort createCategoryPersistencePort;
     private final IExistsCategoryByNamePersistencePort existsCategoryByNamePersistencePort;
 
     public CreateCategoryUseCase(ICreateCategoryPersistencePort createCategoryPersistencePort, IExistsCategoryByNamePersistencePort existsCategoryByNamePersistencePort) {
+
         this.createCategoryPersistencePort = createCategoryPersistencePort;
         this.existsCategoryByNamePersistencePort = existsCategoryByNamePersistencePort;
     }
 
     @Override
     public void createCategory(Category category) {
+
         List<Map<String, String>> errors = CategoryValidator.validate(category);
 
         if (!errors.isEmpty()){

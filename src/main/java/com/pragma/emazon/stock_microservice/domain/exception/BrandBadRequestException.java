@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BrandBadRequestException extends RuntimeException {
+
     private final List<Map<String, String>> errors;
 
     public BrandBadRequestException(List<Map<String, String>> errors) {

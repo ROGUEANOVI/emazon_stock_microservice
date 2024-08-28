@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class BrandRestControllerTest {
+
     @Mock
     private ICreateBrandHandler createBrandHandler;
     @Mock
@@ -28,11 +29,13 @@ class BrandRestControllerTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void createBradShouldReturnCreatedStatus() {
+
         // Arrange
         CreateBrandRequest request = new CreateBrandRequest("New Brand", "Category Description");
 
@@ -48,6 +51,7 @@ class BrandRestControllerTest {
 
     @Test
     void listBrandsShouldReturnPaginatedResponse() {
+
         // Arrange
         Integer page = 1;
         Integer size = 10;

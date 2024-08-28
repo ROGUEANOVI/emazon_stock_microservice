@@ -1,4 +1,4 @@
-package com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant;
+package com.pragma.emazon.stock_microservice.infrastructure.constant;
 
 import lombok.NoArgsConstructor;
 
@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class CategoryApiResponses {
+
     public static final String DESCRIPTION_200 = "Category or categories ok";
     public static final String DESCRIPTION_201 = "Category created";
     public static final String DESCRIPTION_409 = "Category already exists";

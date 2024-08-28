@@ -16,6 +16,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
 class CreateBrandJpaAdapterTest {
+
     @Mock
     private IBrandRepository brandRepository;
 
@@ -27,11 +28,13 @@ class CreateBrandJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void createBrandShouldCallSaveOnRepository() {
+
         // Arrange
         Brand brand = new Brand(1L, "Test Brand", "Test Description");
         BrandEntity brandEntity = new BrandEntity();
@@ -48,6 +51,7 @@ class CreateBrandJpaAdapterTest {
 
     @Test
     void createBrandShouldThrowExceptionWhenRepositoryFails() {
+
         // Arrange
         Brand brand = new Brand(null, null, "");
         BrandEntity brandEntity = new BrandEntity();

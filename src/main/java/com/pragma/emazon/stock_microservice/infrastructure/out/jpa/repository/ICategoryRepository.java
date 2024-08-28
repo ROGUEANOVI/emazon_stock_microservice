@@ -4,5 +4,6 @@ import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.Catego
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICategoryRepository extends JpaRepository<CategoryEntity, Long> {
+
     Boolean existsByName(String name);
 }

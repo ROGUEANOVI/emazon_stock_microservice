@@ -19,6 +19,7 @@ import static com.pragma.emazon.stock_microservice.domain.constant.ArticleValida
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArticleEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,8 +40,8 @@ public class ArticleEntity {
     @Column(name = FIELD_QUANTITY, nullable = false)
     private Long quantity;
 
-    @DecimalMin(value = MINIMUM_PRICE_VALUE, message = INVALID_ARTICLE_PRICE)
-    @Column(name = FIELD_PRICE, nullable = false, precision = 10, scale = 2)
+    @DecimalMin(value = MINIMUM_PRICE_VALUE_STRING, message = INVALID_ARTICLE_PRICE)
+    @Column(name = FIELD_PRICE, nullable = false, precision = PRECISION_PRICE, scale = SCALE_PRICE)
     private BigDecimal price;
 
     @ManyToOne

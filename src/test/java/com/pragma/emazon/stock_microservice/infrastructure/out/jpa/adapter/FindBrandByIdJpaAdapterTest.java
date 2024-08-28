@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 class FindBrandByIdJpaAdapterTest {
+
     @Mock
     private IBrandRepository brandRepository;
 
@@ -31,6 +32,7 @@ class FindBrandByIdJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
 
         brand = new Brand(1L, "Test Brand", "Test Description");
@@ -39,6 +41,7 @@ class FindBrandByIdJpaAdapterTest {
 
     @Test
     void testFindBrandById_WhenBrandExists() {
+
         when(brandRepository.findById(1L)).thenReturn(Optional.of(brandEntity));
         when(entityMapper.toBrand(brandEntity)).thenReturn(brand);
 
@@ -51,6 +54,7 @@ class FindBrandByIdJpaAdapterTest {
 
     @Test
     void testFindBrandById_WhenBrandDoesNotExist() {
+
         when(brandRepository.findById(1L)).thenReturn(Optional.empty());
 
         Optional<Brand> result = findBrandByIdJpaAdapter.findBrandById(1L);
