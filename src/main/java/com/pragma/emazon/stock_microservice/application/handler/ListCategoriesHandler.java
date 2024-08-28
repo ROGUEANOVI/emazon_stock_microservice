@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class ListCategoriesHandler implements IListCategoriesHandler {
+
     private final IListCategoriesServicePort listCategoriesServicePort;
     private final PaginatedResponseMapper paginatedResponseMapper;
 

@@ -8,6 +8,7 @@ import com.pragma.emazon.stock_microservice.domain.port.api.IListCategoriesServi
 import com.pragma.emazon.stock_microservice.domain.port.spi.IListCategoriesPersistencePort;
 
 public class ListCategoriesUseCase implements IListCategoriesServicePort {
+
     private final IListCategoriesPersistencePort listCategoriesPersistencePort;
 
     public ListCategoriesUseCase(IListCategoriesPersistencePort listCategoriesPersistencePort) {
@@ -16,6 +17,7 @@ public class ListCategoriesUseCase implements IListCategoriesServicePort {
 
     @Override
     public GenericPagination<Category> listCategories(Integer page, Integer size, String direction) {
+
         GenericPagination<Category> listCategories = listCategoriesPersistencePort.listCategories(page, size, direction);
 
         if (listCategories.getTotalElements() == 0) {

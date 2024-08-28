@@ -18,6 +18,7 @@ import static com.pragma.emazon.stock_microservice.domain.constant.BrandValidati
 @Getter
 @Setter
 public class BrandEntity {
+
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;

@@ -13,6 +13,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 class ExistsCategoryByNameJpaAdapterTest {
+
     @Mock
     private ICategoryRepository categoryRepository;
 
@@ -21,11 +22,13 @@ class ExistsCategoryByNameJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void existsCategoryByNameShouldReturnTrueWhenCategoryExists() {
+
         // Arrange
         when(categoryRepository.existsByName(anyString())).thenReturn(true);
 
@@ -38,6 +41,7 @@ class ExistsCategoryByNameJpaAdapterTest {
 
     @Test
     void existsCategoryByNameShouldReturnFalseWhenCategoryDoesNotExist() {
+
         // Arrange
         when(categoryRepository.existsByName(anyString())).thenReturn(false);
 

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class CreateArticleHandler implements ICreateArticleHandler {
+
     private final ICreateArticleServicePort createArticleServicePort;
     private final ArticleRequestMapper articleRequestMapper;
 

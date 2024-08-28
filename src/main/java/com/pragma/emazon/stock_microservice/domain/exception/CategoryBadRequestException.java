@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CategoryBadRequestException extends RuntimeException {
+
     private final List<Map<String, String>> errors;
 
     public CategoryBadRequestException(List<Map<String, String>> errors) {

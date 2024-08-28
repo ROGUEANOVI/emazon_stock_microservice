@@ -20,32 +20,38 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 public class BrandBeanConfiguration {
+
     private final IBrandRepository brandRepository;
     private final EntityMapper entityMapper;
     private final PageBrandEntityMapper pageBrandEntityMapper;
 
     @Bean
     public ICreateBrandPersistencePort createBrandPersistencePort() {
+
         return new CreateBrandJpaAdapter(brandRepository, entityMapper);
     }
 
     @Bean
     public IExistsBrandByNamePersistencePort existsBrandByNamePersistencePort() {
+
         return new ExistsBrandByNameJpaAdapter(brandRepository);
     }
 
     @Bean
     public ICreateBrandServicePort createBrandServicePort() {
+
         return new CreateBrandUseCase(createBrandPersistencePort(), existsBrandByNamePersistencePort());
     }
 
     @Bean
     public IListBrandsPersistencePort listBrandsPersistencePort() {
+
         return new ListBrandsJpaAdapter(brandRepository, pageBrandEntityMapper);
     }
 
     @Bean
     public IListBrandsServicePort listBrandsServicePort() {
+
         return new ListBrandsUseCase(listBrandsPersistencePort());
     }
 }

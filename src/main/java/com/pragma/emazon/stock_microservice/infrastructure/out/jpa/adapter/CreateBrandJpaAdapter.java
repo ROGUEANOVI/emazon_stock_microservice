@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class CreateBrandJpaAdapter implements ICreateBrandPersistencePort {
+
     private final IBrandRepository brandRepository;
     private final EntityMapper entityMapper;
     @Override
     public void createBrand(Brand brand) {
+
         brandRepository.save(entityMapper.toBrandEntity(brand));
     }
 }

@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreateBrandUseCaseTest {
+
     @Mock
     private ICreateBrandPersistencePort createBrandPersistencePort;
 
@@ -37,11 +38,13 @@ class CreateBrandUseCaseTest {
 
     @BeforeEach
     void setUp() {
+
         brand = new Brand(1L, "Koaj", "Prendas de vestir para dama y caballeros");
     }
 
     @Test
     void shouldThrowExceptionWhenBrandIsInvalid() {
+
         // Arrange
         Brand invalidBrand = new Brand(null, "", "");
         List<Map<String, String>> errors = List.of(Map.of("name", "Brand name cannot be blank"));
@@ -60,6 +63,7 @@ class CreateBrandUseCaseTest {
 
     @Test
     void shouldCreateBrandSuccessfully() {
+
         // Arrange
         when(existsBrandByNamePersistencePort.existsBrandByName(brand.getName())).thenReturn(false);
 
@@ -72,6 +76,7 @@ class CreateBrandUseCaseTest {
 
     @Test
     void shouldThrowBrandAlreadyExistsException() {
+
         // Arrange
         when(existsBrandByNamePersistencePort.existsBrandByName(brand.getName())).thenReturn(true);
 

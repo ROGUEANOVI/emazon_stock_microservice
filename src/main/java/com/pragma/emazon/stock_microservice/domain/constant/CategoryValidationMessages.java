@@ -1,6 +1,7 @@
 package com.pragma.emazon.stock_microservice.domain.constant;
 
 public class CategoryValidationMessages {
+
     public static final String TABLE_NAME = "category";
     public static final String FIELD_NAME = "name";
     public static final String FIELD_DESCRIPTION = "description";

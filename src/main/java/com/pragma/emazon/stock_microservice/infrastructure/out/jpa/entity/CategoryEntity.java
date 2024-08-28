@@ -18,6 +18,7 @@ import static com.pragma.emazon.stock_microservice.domain.constant.CategoryValid
 @Getter
 @Setter
 public class CategoryEntity {
+
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;

@@ -2,7 +2,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter;
 
 import com.pragma.emazon.stock_microservice.domain.model.Category;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.constant.PropertyNames;
+import com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.CategoryEntity;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.PageCategoryEntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.repository.ICategoryRepository;
@@ -39,6 +39,7 @@ class ListCategoriesJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         Category category = new Category(null, "Electronics", "Gadgets and devices");
         pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PropertyNames.NAME));
         genericPagination = new GenericPagination<>(
@@ -57,6 +58,7 @@ class ListCategoriesJpaAdapterTest {
 
     @Test
     void listCategoriesShouldReturnCustomPageWhenDataIsAvailable() {
+
         // Arrange
         pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PropertyNames.NAME));
         when(categoryRepository.findAll(pageable)).thenReturn(categoryEntityPage);
@@ -73,6 +75,7 @@ class ListCategoriesJpaAdapterTest {
 
     @Test
     void listCategoriesShouldUseCorrectSortingWhenDirectionIsGiven() {
+
         // Arrange
         when(categoryRepository.findAll(any(Pageable.class))).thenReturn(categoryEntityPage);
         when(pageCategoryEntityMapper.toGenericPaginationCategory(any(Page.class))).thenReturn(genericPagination);

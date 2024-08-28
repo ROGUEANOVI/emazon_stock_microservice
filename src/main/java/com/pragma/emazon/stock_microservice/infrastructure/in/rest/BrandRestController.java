@@ -5,6 +5,7 @@ import com.pragma.emazon.stock_microservice.application.dto.response.BrandRespon
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
 import com.pragma.emazon.stock_microservice.application.handler.ICreateBrandHandler;
 import com.pragma.emazon.stock_microservice.application.handler.IListBrandsHandler;
+import com.pragma.emazon.stock_microservice.infrastructure.constant.Regex;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,16 +20,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant.BrandTag.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant.BrandApiResponses.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant.BrandApiResponses.DESCRIPTION_400;
-import static com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant.BrandApiResponses.DESCRIPTION_404;
-import static com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant.PageResponse.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant.PageResponse.INVALID_SORT_DIRECTION;
-import static com.pragma.emazon.stock_microservice.infrastructure.in.rest.constant.ResponseCode.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandTag.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiResponses.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiResponses.DESCRIPTION_400;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiResponses.DESCRIPTION_404;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageResponse.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageResponse.INVALID_SORT_DIRECTION;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.ResponseCode.*;
 
 @RestController
-@RequestMapping("/brands/")
+@RequestMapping(PATH)
 @Tag(name = TAG_NAME, description = TAG_DESCRIPTION)
 @RequiredArgsConstructor
 @Validated
@@ -56,9 +57,9 @@ public class BrandRestController {
     })
     @GetMapping
     public ResponseEntity<PaginatedResponse<BrandResponse>> listBrands(
-            @RequestParam(defaultValue = DEFAULT_PAGE_VALUE)  @Positive(message = INVALID_PAGE_VALUE) @Min(value = 1, message = INVALID_PAGE_VALUE) Integer page,
-            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_VALUE) @Positive(message = INVALID_PAGE_ITEMS_NUMBER) @Min(value = 1, message = INVALID_PAGE_ITEMS_NUMBER) Integer size,
-            @RequestParam(defaultValue = DEFAULT_SORT_DIRECTION_VALUE) @Pattern(regexp = "(?i)^(asc|desc)$", message = INVALID_SORT_DIRECTION) String direction) {
+            @RequestParam(defaultValue = DEFAULT_PAGE_VALUE)  @Positive(message = INVALID_PAGE_VALUE) @Min(value = MINIMUM_PAGE_VALUE, message = INVALID_PAGE_VALUE) Integer page,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_VALUE) @Positive(message = INVALID_PAGE_ITEMS_NUMBER) @Min(value = MINIMUM_PAGE_SIZE_VALUE, message = INVALID_PAGE_ITEMS_NUMBER) Integer size,
+            @RequestParam(defaultValue = DEFAULT_SORT_DIRECTION_VALUE) @Pattern(regexp = Regex.SORT_DIRECTION_REGEX, message = INVALID_SORT_DIRECTION) String direction) {
 
         PaginatedResponse<BrandResponse> brandResponseList = listBrandsHandler.listBrands(page, size, direction);
 

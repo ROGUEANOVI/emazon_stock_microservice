@@ -20,6 +20,7 @@ import java.util.Map;
 
 
 public class CreateArticleUseCase implements ICreateArticleServicePort {
+
     private final ICreateArticlePersistencePort createArticlePersistencePort;
     private final IExistsArticleByNamePersistencePort existsArticleByNamePersistencePort;
     private final IFindBrandByIdPersistencePort findBrandByIdPersistencePort;
@@ -30,13 +31,16 @@ public class CreateArticleUseCase implements ICreateArticleServicePort {
             IExistsArticleByNamePersistencePort existsArticleByNamePersistencePort,
             IFindBrandByIdPersistencePort findBrandByIdPersistencePort,
             IFindCategoryByIdPersistencePort findCategoryByIdPersistencePort) {
+
         this.createArticlePersistencePort = createArticlePersistencePort;
         this.existsArticleByNamePersistencePort = existsArticleByNamePersistencePort;
         this.findBrandByIdPersistencePort = findBrandByIdPersistencePort;
         this.findCategoryByIdPersistencePort = findCategoryByIdPersistencePort;
     }
+
     @Override
     public void createArticle(Article article) {
+
         List<Map<String, String>> errors = ArticleValidator.validate(article);
 
         if (!errors.isEmpty()) {

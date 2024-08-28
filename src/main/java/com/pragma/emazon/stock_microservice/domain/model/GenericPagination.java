@@ -3,6 +3,7 @@ package com.pragma.emazon.stock_microservice.domain.model;
 import java.util.List;
 
 public class GenericPagination<T> {
+
     private final List<T> content;
     private final Integer pageNumber;
     private final Integer pageSize;

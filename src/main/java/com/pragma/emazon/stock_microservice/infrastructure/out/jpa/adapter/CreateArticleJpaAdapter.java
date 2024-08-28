@@ -8,11 +8,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class CreateArticleJpaAdapter implements ICreateArticlePersistencePort {
+
     private final IArticleRepository articleRepository;
     private final EntityMapper entityMapper;
 
     @Override
     public void createArticle(Article article) {
+
         articleRepository.save(entityMapper.toArticleEntity(article));
     }
 }

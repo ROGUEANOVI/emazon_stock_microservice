@@ -9,9 +9,11 @@ import java.util.Map;
 import static com.pragma.emazon.stock_microservice.domain.constant.BrandValidationMessages.*;
 
 public class BrandValidator {
+
     private BrandValidator() {}
 
     public static List<Map<String, String>> validate(Brand brand) {
+
         List<Map<String, String>> errors = new ArrayList<>();
 
         validateName(brand, errors);
@@ -21,6 +23,7 @@ public class BrandValidator {
     }
 
     private static void validateName(Brand brand, List<Map<String, String>> errors) {
+
         if (brand.getName() == null) {
             errors.add(Map.of(FIELD_NAME, INVALID_BRAND_NAME_NULL));
         } else if (brand.getName().isBlank()) {
@@ -31,6 +34,7 @@ public class BrandValidator {
     }
 
     private static void validateDescription(Brand brand, List<Map<String, String>> errors) {
+
         if (brand.getDescription() == null) {
             errors.add(Map.of(FIELD_DESCRIPTION, INVALID_BRAND_DESCRIPTION_NULL));
         } else if (brand.getDescription().isBlank()) {

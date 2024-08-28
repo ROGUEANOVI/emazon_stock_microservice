@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CreateBrandUseCase implements ICreateBrandServicePort {
+
     private final ICreateBrandPersistencePort  createBrandPersistencePort;
     private final IExistsBrandByNamePersistencePort existsBrandByNamePersistencePort;
 
@@ -23,6 +24,7 @@ public class CreateBrandUseCase implements ICreateBrandServicePort {
 
     @Override
     public void createBrand(Brand brand) {
+
         List<Map<String, String>> errors = BrandValidator.validate(brand);
 
         if (!errors.isEmpty()){

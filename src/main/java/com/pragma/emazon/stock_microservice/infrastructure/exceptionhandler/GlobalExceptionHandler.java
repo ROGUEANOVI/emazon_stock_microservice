@@ -1,5 +1,7 @@
 package com.pragma.emazon.stock_microservice.infrastructure.exceptionhandler;
 
+import com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames;
+import com.pragma.emazon.stock_microservice.infrastructure.constant.Regex;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,10 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
+
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
@@ -28,9 +32,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
+
         Map<String, String> errors = new HashMap<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            String paramName = violation.getPropertyPath().toString().split("\\.")[1];
+            String paramName = violation.getPropertyPath().toString().split(Regex.SPLIT_REGEX)[PropertyNames.ZERO_VALUE];
             String message = violation.getMessage();
             errors.put(paramName, message);
         }

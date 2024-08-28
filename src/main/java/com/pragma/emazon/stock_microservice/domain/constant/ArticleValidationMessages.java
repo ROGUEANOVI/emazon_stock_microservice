@@ -1,6 +1,9 @@
 package com.pragma.emazon.stock_microservice.domain.constant;
 
+import java.math.BigDecimal;
+
 public class ArticleValidationMessages {
+
     public static final String TABLE_NAME = "article";
     public static final String TABLE_NAME_MANY_TO_MANY = "article_category";
     public static final String FIELD_ARTICLE_ID = "article_id";
@@ -13,11 +16,16 @@ public class ArticleValidationMessages {
     public static final String FIELD_CATEGORIES = "categories";
     public static final String FIELD_CATEGORY_ID = "category_id";
 
+    public static final int ZERO_VALUE = 0;
+    public static final int THREE_VALUE = 3;
     public static final int MAXIMUM_CHARACTERS_ARTICLE_NAME = 100;
     public static final int MAXIMUM_CHARACTERS_ARTICLE_DESCRIPTION = 500;
+    public static final int PRECISION_PRICE = 10;
+    public static final int SCALE_PRICE = 2;
 
     public static final int MINIMUM_QUANTITY_VALUE = 1;
-    public static final String MINIMUM_PRICE_VALUE = "0.01";
+    public static final String MINIMUM_PRICE_VALUE_STRING = "0.01";
+    public static final BigDecimal MINIMUM_PRICE_VALUE = BigDecimal.valueOf(0.01);
 
     public static final String INVALID_ARTICLE_NAME_NULL = "Article name cannot be null";
     public static final String INVALID_ARTICLE_NAME_SIZE = "Article name cannot be longer than 100 characters";
@@ -31,6 +39,10 @@ public class ArticleValidationMessages {
     public static final String INVALID_ARTICLE_PRICE = "Article price cannot be null or less than 0.01";
     public static final String INVALID_ARTICLE_BRAND = "Article brand cannot be null";
     public static final String INVALID_ARTICLE_CATEGORIES = "Article must have between 1 and 3 categories";
+
+    public static final String SORT_BY_ARTICLE = "name";
+    public static final String SORT_BY_BRAND = "brand.name";
+    public static final String SORT_BY_CATEGORY = "categories.name";
 
     private ArticleValidationMessages() {}
 }

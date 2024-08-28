@@ -13,8 +13,10 @@ import java.util.Map;
 
 @ControllerAdvice
 public class CategoryExceptionHandler {
+
     @ExceptionHandler(CategoryBadRequestException.class)
     public ResponseEntity<Map<String, String>> handleCategoryBadRequestException(CategoryBadRequestException ex) {
+
         Map<String, String> errors = new HashMap<>();
         ex.getErrors().forEach(error -> errors.put(error.keySet().iterator().next(), error.values().iterator().next()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
@@ -22,21 +24,25 @@ public class CategoryExceptionHandler {
 
     @ExceptionHandler(DuplicateCategoryException.class)
     public ResponseEntity<Map<String, String>> handleDuplicateCategoryException(DuplicateCategoryException ex) {
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(CategoryExceptionMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(CategoryAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleCategoryAlReadyExistsException(CategoryAlreadyExistsException ex) {
+
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(CategoryExceptionMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleCategoryNotFoundException(CategoryNotFoundException ex) {
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(CategoryExceptionMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(NoDataFoundCategoryException.class)
-    public ResponseEntity<Map<String, String>> handleNoDataFoundException(NoDataFoundCategoryException ex) {
+    public ResponseEntity<Map<String, String>> handleNoDataFoundCategoryException(NoDataFoundCategoryException ex) {
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(CategoryExceptionMessages.MESSAGE, ex.getMessage()));
     }
 }

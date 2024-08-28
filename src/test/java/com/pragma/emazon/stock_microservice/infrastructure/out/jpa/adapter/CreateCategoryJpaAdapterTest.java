@@ -15,6 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class CreateCategoryJpaAdapterTest {
+
     @Mock
     private ICategoryRepository categoryRepository;
 
@@ -26,11 +27,13 @@ class CreateCategoryJpaAdapterTest {
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void createCategoryShouldCallSaveOnRepository() {
+
         // Arrange
         Category category = new Category(1L, "TestCategory", "TestDescription");
         CategoryEntity categoryEntity = new CategoryEntity();
@@ -47,6 +50,7 @@ class CreateCategoryJpaAdapterTest {
 
     @Test
     void createCategoryShouldThrowExceptionWhenRepositoryFails() {
+
         // Arrange
         Category category = new Category(null, null, "");
         CategoryEntity categoryEntity = new CategoryEntity();

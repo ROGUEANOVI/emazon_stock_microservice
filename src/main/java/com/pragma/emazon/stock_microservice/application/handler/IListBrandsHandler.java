@@ -4,5 +4,6 @@ import com.pragma.emazon.stock_microservice.application.dto.response.BrandRespon
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
 
 public interface IListBrandsHandler {
+
     PaginatedResponse<BrandResponse> listBrands(Integer page, Integer size, String direction);
 }

@@ -16,8 +16,10 @@ import java.util.Map;
 
 @ControllerAdvice
 public class BrandExceptionHandler {
+
     @ExceptionHandler(BrandBadRequestException.class)
     public ResponseEntity<Map<String, String>> handleBrandBadRequestException(BrandBadRequestException ex) {
+
         Map<String, String> errors = new HashMap<>();
         ex.getErrors().forEach(error -> errors.put(error.keySet().iterator().next(), error.values().iterator().next()));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
@@ -25,16 +27,19 @@ public class BrandExceptionHandler {
 
     @ExceptionHandler(BrandAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleBrandAlReadyExistsException(BrandAlreadyExistsException ex) {
+
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(BrandNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleBrandNotFoundException(BrandNotFoundException ex) {
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(NoDataFoundBrandException.class)
-    public ResponseEntity<Map<String, String>> handleNoDataFoundException(NoDataFoundBrandException ex) {
+    public ResponseEntity<Map<String, String>> handleNoDataFoundBrandException(NoDataFoundBrandException ex) {
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
     }
 }

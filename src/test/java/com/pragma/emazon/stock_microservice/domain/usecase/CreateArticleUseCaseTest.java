@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CreateArticleUseCaseTest {
+
     @Mock
     private ICreateArticlePersistencePort createArticlePersistencePort;
 
@@ -48,6 +49,7 @@ class CreateArticleUseCaseTest {
 
     @BeforeEach
     void setUp() {
+
         brand = new Brand(1L, "BrandName", "BrandDescription");
         category1 = new Category(1L, "Category1", "CategoryDescription");
         category2 = new Category(2L, "Category2", "CategoryDescription");
@@ -63,6 +65,7 @@ class CreateArticleUseCaseTest {
 
     @Test
     void shouldCreateArticleSuccessfully() {
+
         when(existsArticleByNamePersistencePort.existsArticleByName(article.getName())).thenReturn(false);
         when(findBrandByIdPersistencePort.findBrandById(brand.getId())).thenReturn(Optional.of(brand));
         when(findCategoryByIdPersistencePort.findCategoryById(category1.getId())).thenReturn(Optional.of(category1));
@@ -75,6 +78,7 @@ class CreateArticleUseCaseTest {
 
     @Test
     void shouldThrowArticleBadRequestExceptionWhenArticleIsInvalid() {
+
         article.setName("");
 
         List<Map<String, String>> validationErrors = ArticleValidator.validate(article);
@@ -89,6 +93,7 @@ class CreateArticleUseCaseTest {
 
     @Test
     void shouldThrowArticleAlreadyExistsExceptionWhenArticleNameExists() {
+
         when(existsArticleByNamePersistencePort.existsArticleByName(article.getName())).thenReturn(true);
 
         assertThrows(ArticleAlreadyExistsException.class, () -> createArticleUseCase.createArticle(article));
@@ -96,6 +101,7 @@ class CreateArticleUseCaseTest {
 
     @Test
     void shouldThrowBrandNotFoundExceptionWhenBrandDoesNotExist() {
+
         when(existsArticleByNamePersistencePort.existsArticleByName(article.getName())).thenReturn(false);
         when(findBrandByIdPersistencePort.findBrandById(brand.getId())).thenReturn(Optional.empty());
 
@@ -104,6 +110,7 @@ class CreateArticleUseCaseTest {
 
     @Test
     void shouldThrowCategoryNotFoundExceptionWhenCategoryDoesNotExist() {
+
         when(existsArticleByNamePersistencePort.existsArticleByName(article.getName())).thenReturn(false);
         when(findBrandByIdPersistencePort.findBrandById(brand.getId())).thenReturn(Optional.of(brand));
         when(findCategoryByIdPersistencePort.findCategoryById(category1.getId())).thenReturn(Optional.of(category1));
@@ -114,6 +121,7 @@ class CreateArticleUseCaseTest {
 
     @Test
     void shouldThrowDuplicateCategoryExceptionWhenArticleHasDuplicateCategories() {
+
         Category duplicateCategory = new Category(1L, "Category1", "CategoryDescription");
         article.setCategories(Arrays.asList(category1, duplicateCategory));
 

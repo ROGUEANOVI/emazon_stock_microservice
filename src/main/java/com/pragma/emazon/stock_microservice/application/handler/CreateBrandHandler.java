@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class CreateBrandHandler implements ICreateBrandHandler {
+
     private final ICreateBrandServicePort createBrandServicePort;
     private final BrandRequestMapper brandRequestMapper;
 

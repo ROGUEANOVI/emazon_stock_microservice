@@ -1,7 +1,10 @@
 package com.pragma.emazon.stock_microservice.infrastructure.in.rest;
 
 import com.pragma.emazon.stock_microservice.application.dto.request.CreateArticleRequest;
+import com.pragma.emazon.stock_microservice.application.dto.response.ArticleResponse;
+import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
 import com.pragma.emazon.stock_microservice.application.handler.ICreateArticleHandler;
+import com.pragma.emazon.stock_microservice.application.handler.ListArticlesHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,19 +20,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class ArticleRestControllerTest {
+
     @Mock
     private ICreateArticleHandler createArticleHandler;
 
+    @Mock
+    private ListArticlesHandler listArticlesHandler;
+
     @InjectMocks
     private ArticleRestController articleRestController;
+    private PaginatedResponse<ArticleResponse> paginatedResponse;
 
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void createArticleShouldReturnCreatedStatus() {
+
         // Arrange
         CreateArticleRequest request = new CreateArticleRequest("New Article", "Article Description", 1L, BigDecimal.valueOf(1.0), 1L, List.of(1L));
 
@@ -41,6 +51,26 @@ class ArticleRestControllerTest {
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         verify(createArticleHandler).createArticle(request);
+    }
+
+    @Test
+    void listArticlesShouldReturnPaginatedResponse() {
+
+        // Arrange
+        Integer page = 1;
+        Integer size = 10;
+        String direction = "ASC";
+        String sortBy = "article";
+
+        when(listArticlesHandler.listArticles(page, size, direction, sortBy)).thenReturn(paginatedResponse);
+
+        // Act
+        ResponseEntity<PaginatedResponse<ArticleResponse>> response = articleRestController.listArticles(page, size, direction, sortBy);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(paginatedResponse, response.getBody());
+        verify(listArticlesHandler, times(1)).listArticles(page, size, direction, sortBy);
     }
 }
 
