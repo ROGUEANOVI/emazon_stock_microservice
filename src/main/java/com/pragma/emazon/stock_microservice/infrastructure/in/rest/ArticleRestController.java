@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
@@ -41,7 +42,7 @@ public class ArticleRestController {
             @ApiResponse(responseCode = CODE_400, description = DESCRIPTION_400, content = @Content)
     })
     @PostMapping
-    public ResponseEntity<Void> createArticle(@RequestBody CreateArticleRequest createArticleRequest) {
+    public ResponseEntity<Void> createArticle(@Valid @RequestBody CreateArticleRequest createArticleRequest) {
 
         articleHandler.createArticle(createArticleRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();

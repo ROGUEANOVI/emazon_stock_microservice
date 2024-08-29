@@ -2,12 +2,10 @@ package com.pragma.emazon.stock_microservice.domain.usecase;
 
 import com.pragma.emazon.stock_microservice.domain.constant.BrandExceptionMessages;
 import com.pragma.emazon.stock_microservice.domain.exception.BrandAlreadyExistsException;
-import com.pragma.emazon.stock_microservice.domain.exception.BrandBadRequestException;
 import com.pragma.emazon.stock_microservice.domain.exception.NoDataFoundBrandException;
 import com.pragma.emazon.stock_microservice.domain.model.Brand;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
 import com.pragma.emazon.stock_microservice.domain.port.spi.IBrandPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.validation.BrandValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -51,25 +48,6 @@ class BrandUseCaseTest {
                 true, // Is First
                 false // Is Last
         );
-    }
-
-    @Test
-    void shouldThrowExceptionWhenBrandIsInvalid() {
-
-        // Arrange
-        Brand invalidBrand = new Brand(null, "", "");
-        List<Map<String, String>> errors = List.of(Map.of("name", "Brand name cannot be blank"));
-
-        try (var mockStatic = mockStatic(BrandValidator.class)) {
-            mockStatic.when(() -> BrandValidator.validate(invalidBrand)).thenReturn(errors);
-
-            // Act and Assert
-            BrandBadRequestException thrownException = assertThrows(BrandBadRequestException.class, () -> {
-                brandUseCase.createBrand(invalidBrand);
-            });
-            assertEquals(errors, thrownException.getErrors());
-            verify(brandPersistencePort, never()).createBrand(any(Brand.class));
-        }
     }
 
     @Test

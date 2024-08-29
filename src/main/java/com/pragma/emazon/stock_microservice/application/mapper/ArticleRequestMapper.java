@@ -19,7 +19,7 @@ public interface ArticleRequestMapper {
     @Mapping(source = BRANDID, target = BRAND_ID)
     @Mapping(target = BRAND_NAME, constant = NAME)
     @Mapping(target = BRAND_DESCRIPTION, constant = DESCRIPTION)
-    @Mapping(source = CATEGORY_IDS,target = CATEGORIES, qualifiedByName = MAP_TO_CATEGORIES)
+    @Mapping(source = CATEGORY_IDS, target = CATEGORIES, qualifiedByName = MAP_TO_CATEGORIES)
     Article toArticle(CreateArticleRequest createArticleRequest);
 
     @Named(MAP_TO_CATEGORIES)

@@ -3,6 +3,8 @@ package com.pragma.emazon.stock_microservice.domain.port.spi;
 import com.pragma.emazon.stock_microservice.domain.model.Article;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
 
+import java.util.Optional;
+
 public interface IArticlePersistencePort {
 
     void createArticle(Article article);
