@@ -1,15 +1,9 @@
 package com.pragma.emazon.stock_microservice.infrastructure.configuration;
 
-import com.pragma.emazon.stock_microservice.domain.port.api.ICreateBrandServicePort;
-import com.pragma.emazon.stock_microservice.domain.port.api.IListBrandsServicePort;
-import com.pragma.emazon.stock_microservice.domain.port.spi.ICreateBrandPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.port.spi.IExistsBrandByNamePersistencePort;
-import com.pragma.emazon.stock_microservice.domain.port.spi.IListBrandsPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.usecase.CreateBrandUseCase;
-import com.pragma.emazon.stock_microservice.domain.usecase.ListBrandsUseCase;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.CreateBrandJpaAdapter;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.ExistsBrandByNameJpaAdapter;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.ListBrandsJpaAdapter;
+import com.pragma.emazon.stock_microservice.domain.port.api.IBrandServicePort;
+import com.pragma.emazon.stock_microservice.domain.port.spi.IBrandPersistencePort;
+import com.pragma.emazon.stock_microservice.domain.usecase.BrandUseCase;
+import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.BrandJpaAdapter;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.EntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.PageBrandEntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.repository.IBrandRepository;
@@ -26,32 +20,16 @@ public class BrandBeanConfiguration {
     private final PageBrandEntityMapper pageBrandEntityMapper;
 
     @Bean
-    public ICreateBrandPersistencePort createBrandPersistencePort() {
+    public IBrandPersistencePort brandPersistencePort() {
 
-        return new CreateBrandJpaAdapter(brandRepository, entityMapper);
+        return new BrandJpaAdapter(brandRepository, entityMapper, pageBrandEntityMapper);
     }
 
-    @Bean
-    public IExistsBrandByNamePersistencePort existsBrandByNamePersistencePort() {
 
-        return new ExistsBrandByNameJpaAdapter(brandRepository);
-    }
 
     @Bean
-    public ICreateBrandServicePort createBrandServicePort() {
+    public IBrandServicePort brandServicePort() {
 
-        return new CreateBrandUseCase(createBrandPersistencePort(), existsBrandByNamePersistencePort());
-    }
-
-    @Bean
-    public IListBrandsPersistencePort listBrandsPersistencePort() {
-
-        return new ListBrandsJpaAdapter(brandRepository, pageBrandEntityMapper);
-    }
-
-    @Bean
-    public IListBrandsServicePort listBrandsServicePort() {
-
-        return new ListBrandsUseCase(listBrandsPersistencePort());
+        return new BrandUseCase(brandPersistencePort());
     }
 }

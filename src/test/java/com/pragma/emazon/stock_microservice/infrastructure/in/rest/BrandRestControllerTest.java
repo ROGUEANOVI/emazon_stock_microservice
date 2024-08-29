@@ -3,8 +3,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.in.rest;
 import com.pragma.emazon.stock_microservice.application.dto.request.CreateBrandRequest;
 import com.pragma.emazon.stock_microservice.application.dto.response.BrandResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
-import com.pragma.emazon.stock_microservice.application.handler.ICreateBrandHandler;
-import com.pragma.emazon.stock_microservice.application.handler.ListBrandsHandler;
+import com.pragma.emazon.stock_microservice.application.handler.IBrandHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,9 +18,7 @@ import static org.mockito.Mockito.*;
 class BrandRestControllerTest {
 
     @Mock
-    private ICreateBrandHandler createBrandHandler;
-    @Mock
-    private ListBrandsHandler listBrandsHandler;
+    private IBrandHandler brandHandler;
 
     @InjectMocks
     private BrandRestController brandRestController;
@@ -39,14 +36,14 @@ class BrandRestControllerTest {
         // Arrange
         CreateBrandRequest request = new CreateBrandRequest("New Brand", "Category Description");
 
-        doNothing().when(createBrandHandler).createBrand(request);
+        doNothing().when(brandHandler).createBrand(request);
 
         // Act
         ResponseEntity<Void> response = brandRestController.createBrand(request);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        verify(createBrandHandler).createBrand(request);
+        verify(brandHandler).createBrand(request);
     }
 
     @Test
@@ -57,7 +54,7 @@ class BrandRestControllerTest {
         Integer size = 10;
         String direction = "ASC";
 
-        when(listBrandsHandler.listBrands(page, size, direction)).thenReturn(paginatedResponse);
+        when(brandHandler.listBrands(page, size, direction)).thenReturn(paginatedResponse);
 
         // Act
         ResponseEntity<PaginatedResponse<BrandResponse>> response = brandRestController.listBrands(page, size, direction);
@@ -65,6 +62,6 @@ class BrandRestControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(paginatedResponse, response.getBody());
-        verify(listBrandsHandler, times(1)).listBrands(page, size, direction);
+        verify(brandHandler, times(1)).listBrands(page, size, direction);
     }
 }

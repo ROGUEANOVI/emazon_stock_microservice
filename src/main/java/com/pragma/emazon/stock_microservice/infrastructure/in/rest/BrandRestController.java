@@ -3,8 +3,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.in.rest;
 import com.pragma.emazon.stock_microservice.application.dto.request.CreateBrandRequest;
 import com.pragma.emazon.stock_microservice.application.dto.response.BrandResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
-import com.pragma.emazon.stock_microservice.application.handler.ICreateBrandHandler;
-import com.pragma.emazon.stock_microservice.application.handler.IListBrandsHandler;
+import com.pragma.emazon.stock_microservice.application.handler.IBrandHandler;
 import com.pragma.emazon.stock_microservice.infrastructure.constant.Regex;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,8 +33,7 @@ import static com.pragma.emazon.stock_microservice.infrastructure.constant.Respo
 @RequiredArgsConstructor
 @Validated
 public class BrandRestController {
-    private final ICreateBrandHandler createBrandHandler;
-    private final IListBrandsHandler listBrandsHandler;
+    private final IBrandHandler brandHandler;
 
     @Operation(summary = SUMMARY_CREATE_BRAND, description = DESCRIPTION_CREATE_BRAND)
     @ApiResponses(value = {
@@ -45,7 +43,7 @@ public class BrandRestController {
     })
     @PostMapping
     public ResponseEntity<Void> createBrand(@RequestBody CreateBrandRequest createBrandRequest) {
-        createBrandHandler.createBrand(createBrandRequest);
+        brandHandler.createBrand(createBrandRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -61,7 +59,7 @@ public class BrandRestController {
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_VALUE) @Positive(message = INVALID_PAGE_ITEMS_NUMBER) @Min(value = MINIMUM_PAGE_SIZE_VALUE, message = INVALID_PAGE_ITEMS_NUMBER) Integer size,
             @RequestParam(defaultValue = DEFAULT_SORT_DIRECTION_VALUE) @Pattern(regexp = Regex.SORT_DIRECTION_REGEX, message = INVALID_SORT_DIRECTION) String direction) {
 
-        PaginatedResponse<BrandResponse> brandResponseList = listBrandsHandler.listBrands(page, size, direction);
+        PaginatedResponse<BrandResponse> brandResponseList = brandHandler.listBrands(page, size, direction);
 
         return ResponseEntity.status(HttpStatus.OK).body(brandResponseList);
     }

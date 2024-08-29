@@ -3,8 +3,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.in.rest;
 import com.pragma.emazon.stock_microservice.application.dto.request.CreateCategoryRequest;
 import com.pragma.emazon.stock_microservice.application.dto.response.CategoryResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
-import com.pragma.emazon.stock_microservice.application.handler.ICreateCategoryHandler;
-import com.pragma.emazon.stock_microservice.application.handler.ListCategoriesHandler;
+import com.pragma.emazon.stock_microservice.application.handler.ICategoryHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,10 +20,7 @@ import static org.mockito.Mockito.*;
 class CategoryRestControllerTest {
 
     @Mock
-    private ICreateCategoryHandler createCategoryHandler;
-
-    @Mock
-    private ListCategoriesHandler listCategoriesHandler;
+    private ICategoryHandler categoryHandler;
 
     @InjectMocks
     private CategoryRestController categoryRestController;
@@ -45,14 +41,14 @@ class CategoryRestControllerTest {
         // Arrange
         CreateCategoryRequest request = new CreateCategoryRequest("NewCategory", "CategoryDescription");
 
-        doNothing().when(createCategoryHandler).createCategory(request);
+        doNothing().when(categoryHandler).createCategory(request);
 
         // Act
         ResponseEntity<Void> response = categoryRestController.createCategory(request);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        verify(createCategoryHandler).createCategory(request);
+        verify(categoryHandler).createCategory(request);
     }
 
     @Test
@@ -63,7 +59,7 @@ class CategoryRestControllerTest {
         Integer size = 10;
         String direction = "ASC";
 
-        when(listCategoriesHandler.listCategories(page, size, direction)).thenReturn(paginatedResponse);
+        when(categoryHandler.listCategories(page, size, direction)).thenReturn(paginatedResponse);
 
         // Act
         ResponseEntity<PaginatedResponse<CategoryResponse>> response = categoryRestController.listCategories(page, size, direction);
@@ -71,6 +67,6 @@ class CategoryRestControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(paginatedResponse, response.getBody());
-        verify(listCategoriesHandler, times(1)).listCategories(page, size, direction);
+        verify(categoryHandler, times(1)).listCategories(page, size, direction);
     }
 }
