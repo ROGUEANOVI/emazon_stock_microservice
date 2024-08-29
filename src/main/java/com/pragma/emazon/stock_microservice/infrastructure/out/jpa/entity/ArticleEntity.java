@@ -1,7 +1,6 @@
 package com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,23 +23,15 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = MAXIMUM_CHARACTERS_ARTICLE_NAME, message = INVALID_ARTICLE_NAME_SIZE)
-    @NotBlank(message = INVALID_ARTICLE_NAME_EMPTY_OR_BLANK)
-    @NotEmpty(message = INVALID_ARTICLE_NAME_EMPTY_OR_BLANK)
-    @Column(name = FIELD_NAME, nullable = false, unique = true)
+    @Column(name = FIELD_NAME, nullable = false, unique = true, length = MAXIMUM_CHARACTERS_ARTICLE_NAME)
     private String name;
 
-    @Size(max = MAXIMUM_CHARACTERS_ARTICLE_DESCRIPTION , message = INVALID_ARTICLE_DESCRIPTION_SIZE)
-    @NotBlank(message = INVALID_ARTICLE_DESCRIPTION_EMPTY_OR_BLANK)
-    @NotEmpty(message = INVALID_ARTICLE_DESCRIPTION_EMPTY_OR_BLANK)
-    @Column(name = FIELD_DESCRIPTION, nullable = false)
+    @Column(name = FIELD_DESCRIPTION, nullable = false, length = MAXIMUM_CHARACTERS_ARTICLE_DESCRIPTION)
     private String description;
 
-    @Min(value = MINIMUM_QUANTITY_VALUE, message = INVALID_ARTICLE_QUANTITY)
     @Column(name = FIELD_QUANTITY, nullable = false)
     private Long quantity;
 
-    @DecimalMin(value = MINIMUM_PRICE_VALUE_STRING, message = INVALID_ARTICLE_PRICE)
     @Column(name = FIELD_PRICE, nullable = false, precision = PRECISION_PRICE, scale = SCALE_PRICE)
     private BigDecimal price;
 

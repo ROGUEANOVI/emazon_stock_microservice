@@ -26,4 +26,6 @@ public interface EntityMapper {
     Brand toBrand(BrandEntity brandEntity);
 
     ArticleEntity toArticleEntity(Article article);
+
+    Article toArticle(ArticleEntity articleEntity);
 }

@@ -2,12 +2,10 @@ package com.pragma.emazon.stock_microservice.domain.usecase;
 
 import com.pragma.emazon.stock_microservice.domain.constant.CategoryExceptionMessages;
 import com.pragma.emazon.stock_microservice.domain.exception.CategoryAlreadyExistsException;
-import com.pragma.emazon.stock_microservice.domain.exception.CategoryBadRequestException;
 import com.pragma.emazon.stock_microservice.domain.exception.NoDataFoundCategoryException;
 import com.pragma.emazon.stock_microservice.domain.model.Category;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
 import com.pragma.emazon.stock_microservice.domain.port.spi.ICategoryPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.validation.CategoryValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,25 +47,6 @@ class CategoryUseCaseTest {
                 true, // Is First
                 false // Is Last
         );
-    }
-
-    @Test
-    void shouldThrowExceptionWhenCategoryIsInvalid() {
-
-        // Arrange
-        Category invalidCategory = new Category(null, "", "");
-        List<Map<String, String>> errors = List.of(Map.of("name", "Category name cannot be blank"));
-
-        try (var mockStatic = mockStatic(CategoryValidator.class)) {
-            mockStatic.when(() -> CategoryValidator.validate(invalidCategory)).thenReturn(errors);
-
-            // Act and Assert
-            CategoryBadRequestException thrownException = assertThrows(CategoryBadRequestException.class, () -> {
-                categoryUseCase.createCategory(invalidCategory);
-            });
-            assertEquals(errors, thrownException.getErrors());
-            verify(categoryPersistencePort, never()).createCategory(any(Category.class));
-        }
     }
 
     @Test

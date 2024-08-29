@@ -12,11 +12,8 @@ import com.pragma.emazon.stock_microservice.domain.port.api.IArticleServicePort;
 import com.pragma.emazon.stock_microservice.domain.port.spi.IArticlePersistencePort;
 import com.pragma.emazon.stock_microservice.domain.port.spi.IBrandPersistencePort;
 import com.pragma.emazon.stock_microservice.domain.port.spi.ICategoryPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.validation.ArticleValidator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.pragma.emazon.stock_microservice.domain.validation.ArticleSort.resolveSortBy;
 
@@ -26,7 +23,10 @@ public class ArticleUseCase implements IArticleServicePort {
     private final IBrandPersistencePort brandPersistencePort;
     private final ICategoryPersistencePort categoryPersistencePort;
 
-    public ArticleUseCase(IArticlePersistencePort articlePersistencePort, IBrandPersistencePort brandPersistencePort, ICategoryPersistencePort categoryPersistencePort) {
+    public ArticleUseCase(
+        IArticlePersistencePort articlePersistencePort,
+        IBrandPersistencePort brandPersistencePort,
+        ICategoryPersistencePort categoryPersistencePort) {
 
         this.articlePersistencePort = articlePersistencePort;
         this.brandPersistencePort = brandPersistencePort;
@@ -36,30 +36,18 @@ public class ArticleUseCase implements IArticleServicePort {
     @Override
     public void createArticle(Article article) {
 
-        List<Map<String, String>> errors = ArticleValidator.validate(article);
-
-        if (!errors.isEmpty()) {
-            throw new ArticleBadRequestException(errors);
-        }
-
         if (Boolean.TRUE.equals(articlePersistencePort.existsArticleByName(article.getName()))) {
             throw new ArticleAlreadyExistsException(ArticleExceptionMessages.ARTICLE_ALREADY_EXISTS, article.getName());
         }
 
         Brand brand = brandPersistencePort.findBrandById(article.getBrand().getId()).orElseThrow(() ->
-                new BrandNotFoundException(BrandExceptionMessages.BRAND_NOT_FOUND, article.getBrand().getId())
+            new BrandNotFoundException(BrandExceptionMessages.BRAND_NOT_FOUND, article.getBrand().getId())
         );
         article.setBrand(brand);
 
-        List<Long> categoryIds = new ArrayList<>();
         List<Category> categories = new ArrayList<>();
 
         for (Category category : article.getCategories()) {
-            if (categoryIds.contains(category.getId())) {
-                throw new DuplicateCategoryException(CategoryExceptionMessages.DUPLICATE_CATEGORY, category.getId());
-            }
-            categoryIds.add(category.getId());
-
             categories.add(categoryPersistencePort.findCategoryById(category.getId()).orElseThrow(() ->
                     new CategoryNotFoundException(CategoryExceptionMessages.CATEGORY_NOT_FOUND, category.getId()))
             );

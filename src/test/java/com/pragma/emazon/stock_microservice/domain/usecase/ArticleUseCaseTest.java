@@ -9,7 +9,6 @@ import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
 import com.pragma.emazon.stock_microservice.domain.port.spi.IArticlePersistencePort;
 import com.pragma.emazon.stock_microservice.domain.port.spi.IBrandPersistencePort;
 import com.pragma.emazon.stock_microservice.domain.port.spi.ICategoryPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.validation.ArticleValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static com.pragma.emazon.stock_microservice.domain.constant.ArticleValidationMessages.INVALID_ARTICLE_NAME_EMPTY_OR_BLANK;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -88,21 +86,6 @@ class ArticleUseCaseTest {
     }
 
     @Test
-    void shouldThrowArticleBadRequestExceptionWhenArticleIsInvalid() {
-
-        article.setName("");
-
-        List<Map<String, String>> validationErrors = ArticleValidator.validate(article);
-
-        assertFalse(validationErrors.isEmpty());
-
-        ArticleBadRequestException exception = assertThrows(ArticleBadRequestException.class,
-                () -> articleUseCase.createArticle(article));
-
-        assertEquals(INVALID_ARTICLE_NAME_EMPTY_OR_BLANK, exception.getErrors().get(0).get("name"));
-    }
-
-    @Test
     void shouldThrowArticleAlreadyExistsExceptionWhenArticleNameExists() {
 
         when(articlePersistencePort.existsArticleByName(article.getName())).thenReturn(true);
@@ -128,19 +111,6 @@ class ArticleUseCaseTest {
         when(categoryPersistencePort.findCategoryById(category2.getId())).thenReturn(Optional.empty());
 
         assertThrows(CategoryNotFoundException.class, () -> articleUseCase.createArticle(article));
-    }
-
-    @Test
-    void shouldThrowDuplicateCategoryExceptionWhenArticleHasDuplicateCategories() {
-
-        Category duplicateCategory = new Category(1L, "Category1", "CategoryDescription");
-        article.setCategories(Arrays.asList(category1, duplicateCategory));
-
-        when(articlePersistencePort.existsArticleByName(article.getName())).thenReturn(false);
-        when(brandPersistencePort.findBrandById(brand.getId())).thenReturn(Optional.of(brand));
-        when(categoryPersistencePort.findCategoryById(category1.getId())).thenReturn(Optional.of(category1));
-
-        assertThrows(DuplicateCategoryException.class, () -> articleUseCase.createArticle(article));
     }
 
 

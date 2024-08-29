@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.Optional;
+
 import static com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames.ONE_VALUE;
 
 @RequiredArgsConstructor
