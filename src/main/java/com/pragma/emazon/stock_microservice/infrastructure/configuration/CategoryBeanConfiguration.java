@@ -1,15 +1,9 @@
 package com.pragma.emazon.stock_microservice.infrastructure.configuration;
 
-import com.pragma.emazon.stock_microservice.domain.port.api.ICreateCategoryServicePort;
-import com.pragma.emazon.stock_microservice.domain.port.api.IListCategoriesServicePort;
-import com.pragma.emazon.stock_microservice.domain.port.spi.ICreateCategoryPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.port.spi.IExistsCategoryByNamePersistencePort;
-import com.pragma.emazon.stock_microservice.domain.port.spi.IListCategoriesPersistencePort;
-import com.pragma.emazon.stock_microservice.domain.usecase.CreateCategoryUseCase;
-import com.pragma.emazon.stock_microservice.domain.usecase.ListCategoriesUseCase;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.CreateCategoryJpaAdapter;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.ExistsCategoryByNameJpaAdapter;
-import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.ListCategoriesJpaAdapter;
+import com.pragma.emazon.stock_microservice.domain.port.api.ICategoryServicePort;
+import com.pragma.emazon.stock_microservice.domain.port.spi.ICategoryPersistencePort;
+import com.pragma.emazon.stock_microservice.domain.usecase.CategoryUseCase;
+import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.CategoryJpaAdapter;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.EntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.PageCategoryEntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.repository.ICategoryRepository;
@@ -26,32 +20,14 @@ public class CategoryBeanConfiguration {
     private final PageCategoryEntityMapper pageCategoryEntityMapper;
 
     @Bean
-    public ICreateCategoryPersistencePort createCategoryPersistencePort() {
+    public ICategoryPersistencePort categoryPersistencePort() {
 
-        return new CreateCategoryJpaAdapter(categoryRepository, entityMapper);
+        return new CategoryJpaAdapter(categoryRepository, entityMapper, pageCategoryEntityMapper);
     }
 
     @Bean
-    public IExistsCategoryByNamePersistencePort existsCategoryByNamePersistencePort() {
+    public ICategoryServicePort categoryServicePort() {
 
-        return new ExistsCategoryByNameJpaAdapter(categoryRepository);
-    }
-
-    @Bean
-    public ICreateCategoryServicePort createCategoryServicePort() {
-
-        return new CreateCategoryUseCase(createCategoryPersistencePort(), existsCategoryByNamePersistencePort());
-    }
-
-    @Bean
-    public IListCategoriesPersistencePort listCategoriesPersistencePort() {
-
-        return new ListCategoriesJpaAdapter(categoryRepository, pageCategoryEntityMapper);
-    }
-
-    @Bean
-    public IListCategoriesServicePort listCategoriesServicePort() {
-
-        return new ListCategoriesUseCase(listCategoriesPersistencePort());
+        return new CategoryUseCase(categoryPersistencePort());
     }
 }

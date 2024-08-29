@@ -3,8 +3,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.in.rest;
 import com.pragma.emazon.stock_microservice.application.dto.request.CreateCategoryRequest;
 import com.pragma.emazon.stock_microservice.application.dto.response.CategoryResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
-import com.pragma.emazon.stock_microservice.application.handler.ICreateCategoryHandler;
-import com.pragma.emazon.stock_microservice.application.handler.IListCategoriesHandler;
+import com.pragma.emazon.stock_microservice.application.handler.ICategoryHandler;
 import com.pragma.emazon.stock_microservice.infrastructure.constant.Regex;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,8 +31,7 @@ import static com.pragma.emazon.stock_microservice.infrastructure.constant.Respo
 @Validated
 public class CategoryRestController {
 
-    private final ICreateCategoryHandler createCategoryHandler;
-    private final IListCategoriesHandler listCategoriesHandler;
+    private final ICategoryHandler categoryHandler;
 
     @Operation(summary = SUMMARY_CREATE_CATEGORY, description = DESCRIPTION_CREATE_CATEGORY)
     @ApiResponses(value = {
@@ -44,7 +42,7 @@ public class CategoryRestController {
     @PostMapping
     public ResponseEntity<Void> createCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
 
-        createCategoryHandler.createCategory(createCategoryRequest);
+        categoryHandler.createCategory(createCategoryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -60,7 +58,7 @@ public class CategoryRestController {
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_VALUE) @Positive(message = INVALID_PAGE_ITEMS_NUMBER ) @Min(value = MINIMUM_PAGE_SIZE_VALUE, message = INVALID_PAGE_ITEMS_NUMBER) Integer size,
             @RequestParam(defaultValue = DEFAULT_SORT_DIRECTION_VALUE) @Pattern(regexp = Regex.SORT_DIRECTION_REGEX, message = INVALID_SORT_DIRECTION) String direction) {
 
-        PaginatedResponse<CategoryResponse> categoryResponseList = listCategoriesHandler.listCategories(page, size, direction);
+        PaginatedResponse<CategoryResponse> categoryResponseList = categoryHandler.listCategories(page, size, direction);
         return ResponseEntity.status(HttpStatus.OK).body(categoryResponseList);
     }
 }

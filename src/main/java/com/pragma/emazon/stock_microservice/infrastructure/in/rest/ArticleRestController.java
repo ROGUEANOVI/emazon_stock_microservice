@@ -3,8 +3,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.in.rest;
 import com.pragma.emazon.stock_microservice.application.dto.request.CreateArticleRequest;
 import com.pragma.emazon.stock_microservice.application.dto.response.ArticleResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
-import com.pragma.emazon.stock_microservice.application.handler.ICreateArticleHandler;
-import com.pragma.emazon.stock_microservice.application.handler.IListArticlesHandler;
+import com.pragma.emazon.stock_microservice.application.handler.IArticleHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,8 +32,7 @@ import static com.pragma.emazon.stock_microservice.infrastructure.constant.Respo
 @Validated
 public class ArticleRestController {
 
-    private final ICreateArticleHandler createArticleHandler;
-    private final IListArticlesHandler listArticlesHandler;
+    private final IArticleHandler articleHandler;
 
     @Operation(summary = SUMMARY_CREATE_ARTICLE, description = DESCRIPTION_CREATE_ARTICLE)
     @ApiResponses(value = {
@@ -45,7 +43,7 @@ public class ArticleRestController {
     @PostMapping
     public ResponseEntity<Void> createArticle(@RequestBody CreateArticleRequest createArticleRequest) {
 
-        createArticleHandler.createArticle(createArticleRequest);
+        articleHandler.createArticle(createArticleRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -63,7 +61,7 @@ public class ArticleRestController {
             @RequestParam(defaultValue = DEFAULT_SORT_BY_VALUE) @Pattern(regexp = SORT_BY_REGEX, message = INVALID_SORT_BY) String sortBy
     ) {
 
-        PaginatedResponse<ArticleResponse> articleResponseList = listArticlesHandler.listArticles(page, size, direction, sortBy);
+        PaginatedResponse<ArticleResponse> articleResponseList = articleHandler.listArticles(page, size, direction, sortBy);
         return ResponseEntity.status(HttpStatus.OK).body(articleResponseList);
     }
 }
