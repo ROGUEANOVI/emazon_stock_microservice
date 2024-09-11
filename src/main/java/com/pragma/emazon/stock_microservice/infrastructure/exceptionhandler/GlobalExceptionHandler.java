@@ -1,6 +1,6 @@
 package com.pragma.emazon.stock_microservice.infrastructure.exceptionhandler;
 
-import com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames;
+import com.pragma.emazon.stock_microservice.domain.constant.GlobalMessages;
 import com.pragma.emazon.stock_microservice.infrastructure.constant.Regex;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -35,11 +35,12 @@ public class GlobalExceptionHandler {
 
         Map<String, String> errors = new HashMap<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            String paramName = violation.getPropertyPath().toString().split(Regex.SPLIT_REGEX)[PropertyNames.ZERO_VALUE];
+            String[] pathElements = violation.getPropertyPath().toString().split(Regex.SPLIT_REGEX);
+            String paramName = pathElements[pathElements.length - GlobalMessages.LAST_ELEMENT_INDEX];
             String message = violation.getMessage();
             errors.put(paramName, message);
         }
 
-        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 }

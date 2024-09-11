@@ -4,30 +4,30 @@ import com.pragma.emazon.stock_microservice.application.dto.request.CreateArticl
 import com.pragma.emazon.stock_microservice.application.dto.response.ArticleResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
 import com.pragma.emazon.stock_microservice.application.handler.IArticleHandler;
+import com.pragma.emazon.stock_microservice.infrastructure.constant.PreAuthorizeMessages;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.ArticleApiResponses.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.ArticleTag.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageResponse.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageResponse.INVALID_SORT_DIRECTION;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.ArticleApiMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.OpenApiMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.INVALID_SORT_DIRECTION;
 import static com.pragma.emazon.stock_microservice.infrastructure.constant.Regex.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.ResponseCode.*;
 
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(ROUTE_ARTICLES)
 @Tag(name = TAG_NAME, description = TAG_DESCRIPTION)
 @RequiredArgsConstructor
 @Validated
@@ -41,8 +41,9 @@ public class ArticleRestController {
             @ApiResponse(responseCode = CODE_409, description = DESCRIPTION_409, content = @Content),
             @ApiResponse(responseCode = CODE_400, description = DESCRIPTION_400, content = @Content)
     })
+    @PreAuthorize(PreAuthorizeMessages.HAS_ROLE_ADMIN)
     @PostMapping
-    public ResponseEntity<Void> createArticle(@Valid @RequestBody CreateArticleRequest createArticleRequest) {
+    public ResponseEntity<Void> createArticle(@RequestBody CreateArticleRequest createArticleRequest) {
 
         articleHandler.createArticle(createArticleRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();

@@ -8,11 +8,11 @@ import com.pragma.emazon.stock_microservice.application.mapper.PaginatedResponse
 import com.pragma.emazon.stock_microservice.domain.port.api.IArticleServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Validated
 public class ArticleHandler implements IArticleHandler {
 
     private final IArticleServicePort articleServicePort;
@@ -20,7 +20,7 @@ public class ArticleHandler implements IArticleHandler {
     private final PaginatedResponseMapper paginatedResponseMapper;
 
     @Override
-    public void createArticle(CreateArticleRequest createArticleRequest) {
+    public void createArticle(@Validated CreateArticleRequest createArticleRequest) {
 
         articleServicePort.createArticle(articleRequestMapper.toArticle(createArticleRequest));
     }

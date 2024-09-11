@@ -2,7 +2,6 @@ package com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter;
 
 import com.pragma.emazon.stock_microservice.domain.model.Category;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
-import com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.CategoryEntity;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.EntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.PageCategoryEntityMapper;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.PROPERTY_NAME;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +46,7 @@ class CategoryJpaAdapterTest {
         MockitoAnnotations.openMocks(this);
 
         Category category = new Category(null, "Electronics", "Gadgets and devices");
-        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PropertyNames.NAME));
+        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PROPERTY_NAME));
         genericPagination = new GenericPagination<>(
                 List.of(category), // Content
                 0, // Page Number
@@ -101,7 +101,7 @@ class CategoryJpaAdapterTest {
     void listCategoriesShouldReturnCustomPageWhenDataIsAvailable() {
 
         // Arrange
-        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PropertyNames.NAME));
+        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PROPERTY_NAME));
         when(categoryRepository.findAll(pageable)).thenReturn(categoryEntityPage);
         when(pageCategoryEntityMapper.toGenericPaginationCategory(categoryEntityPage)).thenReturn(genericPagination);
 

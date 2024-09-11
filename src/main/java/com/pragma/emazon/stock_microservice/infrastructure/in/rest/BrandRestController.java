@@ -4,32 +4,34 @@ import com.pragma.emazon.stock_microservice.application.dto.request.CreateBrandR
 import com.pragma.emazon.stock_microservice.application.dto.response.BrandResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
 import com.pragma.emazon.stock_microservice.application.handler.IBrandHandler;
+import com.pragma.emazon.stock_microservice.infrastructure.constant.PreAuthorizeMessages;
 import com.pragma.emazon.stock_microservice.infrastructure.constant.Regex;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandTag.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiResponses.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiResponses.DESCRIPTION_400;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiResponses.DESCRIPTION_404;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageResponse.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageResponse.INVALID_SORT_DIRECTION;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.ResponseCode.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiMessages.TAG_DESCRIPTION;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiMessages.TAG_NAME;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiMessages.DESCRIPTION_400;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.BrandApiMessages.DESCRIPTION_404;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.OpenApiMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.INVALID_SORT_DIRECTION;
 
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(ROUTE_BRANDS)
 @Tag(name = TAG_NAME, description = TAG_DESCRIPTION)
 @RequiredArgsConstructor
 @Validated
@@ -42,8 +44,9 @@ public class BrandRestController {
             @ApiResponse(responseCode = CODE_409, description = DESCRIPTION_409, content = @Content),
             @ApiResponse(responseCode = CODE_400, description = DESCRIPTION_400, content = @Content)
     })
+    @PreAuthorize(PreAuthorizeMessages.HAS_ROLE_ADMIN)
     @PostMapping
-    public ResponseEntity<Void> createBrand(@Valid @RequestBody CreateBrandRequest createBrandRequest) {
+    public ResponseEntity<Void> createBrand(@RequestBody CreateBrandRequest createBrandRequest) {
         brandHandler.createBrand(createBrandRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

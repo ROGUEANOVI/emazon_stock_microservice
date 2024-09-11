@@ -4,29 +4,32 @@ import com.pragma.emazon.stock_microservice.application.dto.request.CreateCatego
 import com.pragma.emazon.stock_microservice.application.dto.response.CategoryResponse;
 import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedResponse;
 import com.pragma.emazon.stock_microservice.application.handler.ICategoryHandler;
+import com.pragma.emazon.stock_microservice.infrastructure.constant.PreAuthorizeMessages;
 import com.pragma.emazon.stock_microservice.infrastructure.constant.Regex;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.CategoryApiResponses.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.CategoryTag.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageResponse.*;
-import static com.pragma.emazon.stock_microservice.infrastructure.constant.ResponseCode.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.CategoryApiMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.CategoryApiMessages.ROUTE_CATEGORIES;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.CategoryApiMessages.TAG_DESCRIPTION;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.CategoryApiMessages.TAG_NAME;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.OpenApiMessages.*;
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.*;
 
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(ROUTE_CATEGORIES)
 @Tag(name = TAG_NAME, description = TAG_DESCRIPTION)
 @RequiredArgsConstructor
 @Validated
@@ -40,8 +43,9 @@ public class CategoryRestController {
         @ApiResponse(responseCode = CODE_409, description = DESCRIPTION_409, content = @Content),
         @ApiResponse(responseCode = CODE_400, description = DESCRIPTION_400, content = @Content)
     })
+    @PreAuthorize(PreAuthorizeMessages.HAS_ROLE_ADMIN)
     @PostMapping
-    public ResponseEntity<Void> createCategory(@Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
+    public ResponseEntity<Void> createCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
 
         categoryHandler.createCategory(createCategoryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();

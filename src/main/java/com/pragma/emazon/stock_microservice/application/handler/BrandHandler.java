@@ -6,13 +6,14 @@ import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedRe
 import com.pragma.emazon.stock_microservice.application.mapper.BrandRequestMapper;
 import com.pragma.emazon.stock_microservice.application.mapper.PaginatedResponseMapper;
 import com.pragma.emazon.stock_microservice.domain.port.api.IBrandServicePort;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Validated
 public class BrandHandler implements IBrandHandler {
 
     private final IBrandServicePort brandServicePort;
@@ -20,7 +21,7 @@ public class BrandHandler implements IBrandHandler {
     private final PaginatedResponseMapper paginatedResponseMapper;
 
     @Override
-    public void createBrand(CreateBrandRequest createBrandRequest) {
+    public void createBrand(@Valid CreateBrandRequest createBrandRequest) {
 
         brandServicePort.createBrand(brandRequestMapper.toBrand(createBrandRequest));
     }
