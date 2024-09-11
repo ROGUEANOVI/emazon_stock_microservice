@@ -23,3 +23,8 @@ springdoc:
     path: /swagger-ui.html
   api-docs:
     path: /api-docs
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    issuer: ${JWT_ISSUER}

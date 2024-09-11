@@ -1,6 +1,6 @@
 package com.pragma.emazon.stock_microservice.infrastructure.exceptionhandler;
 
-import com.pragma.emazon.stock_microservice.domain.constant.BrandExceptionMessages;
+import com.pragma.emazon.stock_microservice.domain.constant.GlobalMessages;
 import com.pragma.emazon.stock_microservice.domain.exception.BrandAlreadyExistsException;
 import com.pragma.emazon.stock_microservice.domain.exception.BrandBadRequestException;
 import com.pragma.emazon.stock_microservice.domain.exception.BrandNotFoundException;
@@ -28,18 +28,18 @@ public class BrandExceptionHandler {
     @ExceptionHandler(BrandAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleBrandAlReadyExistsException(BrandAlreadyExistsException ex) {
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(GlobalMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(BrandNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleBrandNotFoundException(BrandNotFoundException ex) {
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(GlobalMessages.MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(NoDataFoundBrandException.class)
     public ResponseEntity<Map<String, String>> handleNoDataFoundBrandException(NoDataFoundBrandException ex) {
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(BrandExceptionMessages.MESSAGE, ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(GlobalMessages.MESSAGE, ex.getMessage()));
     }
 }

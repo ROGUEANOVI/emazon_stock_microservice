@@ -4,7 +4,6 @@ import com.pragma.emazon.stock_microservice.domain.model.Article;
 import com.pragma.emazon.stock_microservice.domain.model.Brand;
 import com.pragma.emazon.stock_microservice.domain.model.Category;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
-import com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.ArticleEntity;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.BrandEntity;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.CategoryEntity;
@@ -21,6 +20,7 @@ import org.springframework.data.domain.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.PROPERTY_NAME;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,7 +51,7 @@ class ArticleJpaAdapterTest {
         MockitoAnnotations.openMocks(this);
 
         Article article = new Article(null, "Article 45", "description ae", 10L, BigDecimal.valueOf(10.0), new Brand(1L, "Koaj", "description koaj"), List.of());
-        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PropertyNames.NAME));
+        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PROPERTY_NAME));
         genericPagination = new GenericPagination<>(
                 List.of(article), // Content
                 0, // Page Number
@@ -131,7 +131,7 @@ class ArticleJpaAdapterTest {
     void listBrandsShouldReturnCustomPageWhenDataIsAvailable() {
 
         // Arrange
-        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PropertyNames.NAME));
+        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PROPERTY_NAME));
         when(articleRepository.findAll(pageable)).thenReturn(articleEntityPage);
         when(pageArticleEntityMapper.toGenericPaginationArticle(articleEntityPage)).thenReturn(genericPagination);
 

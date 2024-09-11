@@ -1,8 +1,7 @@
 package com.pragma.emazon.stock_microservice.application.dto.request;
 
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.math.BigDecimal;
@@ -12,6 +11,9 @@ import static com.pragma.emazon.stock_microservice.domain.constant.ArticleValida
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class CreateArticleRequest {
 
     @Size(max = MAXIMUM_CHARACTERS_ARTICLE_NAME, message = INVALID_ARTICLE_NAME_SIZE)
@@ -38,13 +40,4 @@ public class CreateArticleRequest {
     @Size(min = ONE_VALUE, max = THREE_VALUE, message = INVALID_ARTICLE_CATEGORIES)
     @UniqueElements(message = DUPLICATE_CATEGORIES)
     private List<Long> categoryIds;
-
-    public CreateArticleRequest(String name, String description, Long quantity, BigDecimal price, Long brandId, List<Long> categoryIds) {
-        this.name = name.trim();
-        this.description = description.trim();
-        this.quantity = quantity;
-        this.price = price;
-        this.brandId = brandId;
-        this.categoryIds = categoryIds;
-    }
 }

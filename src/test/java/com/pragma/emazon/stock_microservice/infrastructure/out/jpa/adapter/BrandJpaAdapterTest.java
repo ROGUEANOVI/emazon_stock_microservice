@@ -2,7 +2,6 @@ package com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter;
 
 import com.pragma.emazon.stock_microservice.domain.model.Brand;
 import com.pragma.emazon.stock_microservice.domain.model.GenericPagination;
-import com.pragma.emazon.stock_microservice.infrastructure.constant.PropertyNames;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.entity.BrandEntity;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.EntityMapper;
 import com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.PageBrandEntityMapper;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.PROPERTY_NAME;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
@@ -47,7 +47,7 @@ class BrandJpaAdapterTest {
         MockitoAnnotations.openMocks(this);
 
         Brand brand = new Brand(null, "Koaj", "description koaj");
-        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PropertyNames.NAME));
+        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PROPERTY_NAME));
         genericPagination = new GenericPagination<>(
                 List.of(brand), // Content
                 0, // Page Number
@@ -102,7 +102,7 @@ class BrandJpaAdapterTest {
     void listBrandsShouldReturnCustomPageWhenDataIsAvailable() {
 
         // Arrange
-        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PropertyNames.NAME));
+        pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, PROPERTY_NAME));
         when(brandRepository.findAll(pageable)).thenReturn(brandEntityPage);
         when(pageBrandEntityMapper.toGenericPaginationBrand(brandEntityPage)).thenReturn(genericPagination);
 

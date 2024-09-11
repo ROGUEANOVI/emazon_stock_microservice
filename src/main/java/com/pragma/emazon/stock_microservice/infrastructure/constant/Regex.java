@@ -8,6 +8,10 @@ import static lombok.AccessLevel.PRIVATE;
 public class Regex {
 
     public static final String SORT_DIRECTION_REGEX = "(?i)^(asc|desc)$";
+
     public static final String SORT_BY_REGEX = "^(article|brand|category)$";
+
     public static final String SPLIT_REGEX = "\\.";
+
+    public static final int INDEX_FIRST_VALUE = 0;
 }

@@ -6,13 +6,14 @@ import com.pragma.emazon.stock_microservice.application.dto.response.PaginatedRe
 import com.pragma.emazon.stock_microservice.application.mapper.CategoryRequestMapper;
 import com.pragma.emazon.stock_microservice.application.mapper.PaginatedResponseMapper;
 import com.pragma.emazon.stock_microservice.domain.port.api.ICategoryServicePort;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Validated
 public class CategoryHandler implements ICategoryHandler {
 
     private final ICategoryServicePort categoryServicePort;
@@ -20,7 +21,7 @@ public class CategoryHandler implements ICategoryHandler {
     private final PaginatedResponseMapper paginatedResponseMapper;
 
     @Override
-    public void createCategory(CreateCategoryRequest createCategoryRequest) {
+    public void createCategory(@Valid CreateCategoryRequest createCategoryRequest) {
 
         categoryServicePort.createCategory(categoryRequestMapper.toCategory(createCategoryRequest));
     }

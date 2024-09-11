@@ -3,7 +3,6 @@ plugins {
 	id 'org.springframework.boot' version '3.3.3'
 	id 'io.spring.dependency-management' version '1.1.6'
 	id 'jacoco'
-	id "org.sonarqube" version "5.1.0.4882"
 }
 
 group = 'com.pragma.emazon'
@@ -27,10 +26,12 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 	implementation "me.paulschwarz:spring-dotenv:3.0.0"
 	implementation 'org.mapstruct:mapstruct:1.6.0'
+	implementation 'com.auth0:java-jwt:4.4.0'
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.1.0'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -39,6 +40,7 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.mockito:mockito-core:5.3.1'
 	testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
 }
@@ -46,72 +48,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-sonar {
-	properties {
-		property "sonar.host.url", "http://localhost:9000"
-		property "sonar.token", "squ_917678584b7c6e9403474ce8191990bdb3d12bd2"
-	}
-}
-
-test {
-	finalizedBy jacocoTestReport
-}
-
-jacocoTestReport {
-	dependsOn test
-
-	reports {
-		xml.required = false
-		csv.required = false
-	}
-}
-
-//jacocoTestCoverageVerification {
-//	check.dependsOn jacocoTestCoverageVerification
-//
-//	violationRules {
-//		rule {
-//			limit {
-//				minimum = 0.8
-//			}
-//		}
-//
-//		rule {
-//			enabled = true
-//			element = 'CLASS'
-//
-//			includes = [
-//					'com.pragma.emazon.stock_microservice.domain.usecase.*',
-//					'com.pragma.emazon.stock_microservice.infrastructure.in.rest.*RestController',
-//					'com.pragma.emazon.stock_microservice.infrastructure.out.jpa.adapter.*'
-//			]
-//
-//			excludes = [
-//					'com.pragma.emazon.stock_microservice.infrastructure.out.jpa.mapper.*',
-//					'com.pragma.emazon.stock_microservice.application.mapper.*',
-//					'com.pragma.emazon.stock_microservice.infrastructure.exceptionhandler.*',
-//					'com.pragma.emazon.stock_microservice.domain.validation.*',
-//					'com.pragma.emazon.stock_microservice.domain.model.*',
-//					'com.pragma.emazon.stock_microservice.application.handler.*',
-//					'com.pragma.emazon.stock_microservice.application.dto.request.*'
-//			]
-//
-//			limit {
-//				counter = 'LINE'
-//				value = 'TOTALCOUNT'
-//				maximum = 0.3
-//			}
-//			limit {
-//				counter = 'LINE'
-//				value = 'COVEREDRATIO'
-//				minimum = 0.8 // Cobertura mínima del 80% de líneas por clase
-//			}
-//			limit {
-//				counter = 'BRANCH'
-//				value = 'COVEREDRATIO'
-//				minimum = 0.7 // Cobertura mínima del 70% de ramas por clase
-//			}
-//		}
-//	}
-//}
