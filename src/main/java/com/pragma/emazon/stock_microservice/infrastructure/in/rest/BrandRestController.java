@@ -36,6 +36,7 @@ import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageM
 @RequiredArgsConstructor
 @Validated
 public class BrandRestController {
+
     private final IBrandHandler brandHandler;
 
     @Operation(summary = SUMMARY_CREATE_BRAND, description = DESCRIPTION_CREATE_BRAND)

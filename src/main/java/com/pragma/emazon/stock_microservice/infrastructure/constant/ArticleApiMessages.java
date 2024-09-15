@@ -11,6 +11,10 @@ public class ArticleApiMessages {
 
     public static final String ROUTE_ARTICLES = "/api/v1/articles";
 
+    public static final String ROUTE_ARTICLE_QUANTITY = "/{id}/quantity";
+
+    public static final String ID = "id";
+
     public static final String TAG_NAME = "Article";
 
     public static final String TAG_DESCRIPTION = "Rest controller for article";
@@ -32,4 +36,8 @@ public class ArticleApiMessages {
     public static final String SUMMARY_LIST_ARTICLES = "List articles";
 
     public static final String DESCRIPTION_LIST_ARTICLES = "Rest method for list articles";
+
+    public static final String SUMMARY_UPDATE_ARTICLE_QUANTITY = "Update article quantity";
+
+    public static final String DESCRIPTION_UPDATE_ARTICLE_QUANTITY = "Rest method for update article quantity";
 }

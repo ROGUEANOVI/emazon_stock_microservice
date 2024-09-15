@@ -19,6 +19,7 @@ import org.springframework.data.domain.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.PROPERTY_NAME;
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,7 +51,7 @@ class ArticleJpaAdapterTest {
 
         MockitoAnnotations.openMocks(this);
 
-        Article article = new Article(null, "Article 45", "description ae", 10L, BigDecimal.valueOf(10.0), new Brand(1L, "Koaj", "description koaj"), List.of());
+        Article article = new Article(null, "Article 45", "description ae", 10, BigDecimal.valueOf(10.0), new Brand(1L, "Koaj", "description koaj"), List.of());
         pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, PROPERTY_NAME));
         genericPagination = new GenericPagination<>(
                 List.of(article), // Content
@@ -66,7 +67,7 @@ class ArticleJpaAdapterTest {
                 1L,
                 "Article dghg",
                 "description 2",
-                10L,
+                10,
                 BigDecimal.valueOf(10.0),
                 new BrandEntity(1L, "Koaj", "description koaj"),
                 List.of(new CategoryEntity(1L, "Electronics", "Gadgets and devices"))
@@ -83,7 +84,7 @@ class ArticleJpaAdapterTest {
                 null,
             "Test Brand",
                 "Test Description",
-                10L,
+                10,
                 BigDecimal.valueOf(10.0),
                 new Brand(1L, "Test Brand", "Test Description"),
                 List.of(new Category(1L, "sgg", "efsdgffs"))
@@ -108,7 +109,7 @@ class ArticleJpaAdapterTest {
                 null,
                 "Test Brand",
                 "Test Description",
-                10L,
+                10,
                 BigDecimal.valueOf(10.0),
                 new Brand(1L, "Test Brand", "Test Description"),
                 List.of(new Category(1L, "Category", "Category Description"))
@@ -185,5 +186,83 @@ class ArticleJpaAdapterTest {
 
         // Assert
         assertFalse(result);
+    }
+
+    @Test
+    void findArticleByIdShouldReturnArticleWhenArticleExists() {
+
+        ArticleEntity articleEntity = new ArticleEntity(
+                1L,
+                "Article dghg",
+                "description 2",
+                10,
+                BigDecimal.valueOf(10.0),
+                new BrandEntity(1L, "Koaj", "description koaj"),
+                List.of(new CategoryEntity(1L, "Electronics", "Gadgets and devices"))
+        );
+
+        Article article = new Article(
+                1L,
+                "Article dghg",
+                "description 2",
+                10,
+                BigDecimal.valueOf(10.0),
+                new Brand(1L, "Koaj", "description koaj"),
+                List.of(new Category(1L, "Electronics", "Gadgets and devices"))
+        );
+
+        when(articleRepository.findById(1L)).thenReturn(Optional.of(articleEntity));
+        when(entityMapper.toArticle(articleEntity)).thenReturn(article);
+
+        Optional<Article> result = articleJpaAdapter.findArticleById(1L);
+
+        assertTrue(result.isPresent());
+        assertEquals(article, result.get());
+
+        verify(articleRepository).findById(1L);
+        verify(entityMapper).toArticle(articleEntity);
+    }
+
+    @Test
+    void findArticleById_ShouldReturnEmpty_WhenArticleDoesNotExist() {
+        when(articleRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Optional<Article> result = articleJpaAdapter.findArticleById(1L);
+
+        assertFalse(result.isPresent());
+
+        verify(articleRepository).findById(1L);
+        verify(entityMapper, never()).toArticle(any());
+    }
+
+    @Test
+    void updateArticle_ShouldSaveArticle_WhenArticleIsValid() {
+
+        ArticleEntity articleEntity = new ArticleEntity(
+                1L,
+                "Article dghg",
+                "description 2",
+                10,
+                BigDecimal.valueOf(10.0),
+                new BrandEntity(1L, "Koaj", "description koaj"),
+                List.of(new CategoryEntity(1L, "Electronics", "Gadgets and devices"))
+        );
+
+        Article article = new Article(
+                1L,
+                "Article dghg",
+                "description 2",
+                10,
+                BigDecimal.valueOf(10.0),
+                new Brand(1L, "Koaj", "description koaj"),
+                List.of(new Category(1L, "Electronics", "Gadgets and devices"))
+        );
+
+        when(entityMapper.toArticleEntity(article)).thenReturn(articleEntity);
+
+        articleJpaAdapter.updateArticle(article);
+
+        verify(articleRepository).save(articleEntity);
+        verify(entityMapper).toArticleEntity(article);
     }
 }

@@ -56,7 +56,7 @@ class ArticleUseCaseTest {
         article = new Article();
         article.setName("ArticleName");
         article.setDescription("ArticleDescription");
-        article.setQuantity(10L);
+        article.setQuantity(10);
         article.setPrice(BigDecimal.valueOf(10.0));
         article.setBrand(brand);
         article.setCategories(Arrays.asList(category1, category2));
@@ -171,5 +171,29 @@ class ArticleUseCaseTest {
 
         // Assert
         verify(articlePersistencePort, times(1)).listArticles(1, 20, "desc", "name");
+    }
+
+    @Test
+    void updateArticleQuantity_ShouldUpdateQuantity_WhenArticleExists() {
+
+        when(articlePersistencePort.findArticleById(1L)).thenReturn(Optional.of(article));
+
+        articleUseCase.updateArticleQuantity(1L, 5);
+
+        assertEquals(15, article.getQuantity());
+
+        verify(articlePersistencePort).updateArticle(article);
+    }
+
+    @Test
+    void updateArticleQuantity_ShouldThrowException_WhenArticleNotFound() {
+
+        when(articlePersistencePort.findArticleById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(ArticleNotFoundException.class, () ->
+                articleUseCase.updateArticleQuantity(1L, 5)
+        );
+
+        verify(articlePersistencePort, never()).updateArticle(any());
     }
 }

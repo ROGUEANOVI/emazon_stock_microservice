@@ -3,6 +3,7 @@ package com.pragma.emazon.stock_microservice.infrastructure.exceptionhandler;
 import com.pragma.emazon.stock_microservice.domain.constant.GlobalMessages;
 import com.pragma.emazon.stock_microservice.domain.exception.ArticleAlreadyExistsException;
 import com.pragma.emazon.stock_microservice.domain.exception.ArticleBadRequestException;
+import com.pragma.emazon.stock_microservice.domain.exception.ArticleNotFoundException;
 import com.pragma.emazon.stock_microservice.domain.exception.NoDataFoundArticleException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,12 @@ public class ArticleExceptionHandler {
 
     @ExceptionHandler(NoDataFoundArticleException.class)
     public ResponseEntity<Map<String, String>> handleNoDataFoundArticleException(NoDataFoundArticleException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(GlobalMessages.MESSAGE, ex.getMessage()));
+    }
+
+    @ExceptionHandler(ArticleNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleArticleNotFoundException(ArticleNotFoundException ex) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(GlobalMessages.MESSAGE, ex.getMessage()));
     }
