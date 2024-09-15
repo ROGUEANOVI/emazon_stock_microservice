@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static com.pragma.emazon.stock_microservice.infrastructure.constant.PageMessages.MINIMUM_PAGE_NUMBER;
 
 @RequiredArgsConstructor
@@ -46,5 +48,17 @@ public class ArticleJpaAdapter implements IArticlePersistencePort {
     public Boolean existsArticleByName(String name) {
 
         return articleRepository.existsByName(name);
+    }
+
+    @Override
+    public Optional<Article> findArticleById(Long articleId) {
+
+        return articleRepository.findById(articleId).map(entityMapper::toArticle);
+    }
+
+    @Override
+    public void updateArticle(Article article) {
+
+        articleRepository.save(entityMapper.toArticleEntity(article));
     }
 }

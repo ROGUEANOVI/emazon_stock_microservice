@@ -68,4 +68,15 @@ public class ArticleUseCase implements IArticleServicePort {
 
         return listArticles;
     }
+
+    @Override
+    public void updateArticleQuantity(Long articleId, Integer quantity) {
+
+        Article article = articlePersistencePort.findArticleById(articleId).orElseThrow(() ->
+            new ArticleNotFoundException(ArticleExceptionMessages.ARTICLE_NOT_FOUND, articleId)
+        );
+
+        article.setQuantity(article.getQuantity() + quantity);
+        articlePersistencePort.updateArticle(article);
+    }
 }

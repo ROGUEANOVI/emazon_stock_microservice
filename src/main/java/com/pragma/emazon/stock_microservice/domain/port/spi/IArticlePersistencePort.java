@@ -12,4 +12,8 @@ public interface IArticlePersistencePort {
     GenericPagination<Article> listArticles(Integer page, Integer size, String direction, String sortBy);
 
     Boolean existsArticleByName(String name);
+
+    Optional<Article> findArticleById(Long articleId);
+
+    void updateArticle(Article article);
 }

@@ -30,7 +30,7 @@ public class ArticleEntity {
     private String description;
 
     @Column(name = FIELD_QUANTITY, nullable = false)
-    private Long quantity;
+    private Integer quantity;
 
     @Column(name = FIELD_PRICE, nullable = false, precision = PRECISION_PRICE, scale = SCALE_PRICE)
     private BigDecimal price;

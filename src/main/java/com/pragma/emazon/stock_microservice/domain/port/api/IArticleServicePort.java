@@ -8,4 +8,6 @@ public interface IArticleServicePort {
     void createArticle(Article article);
 
     GenericPagination<Article> listArticles(Integer page, Integer size, String direction, String sortBy);
+
+    void updateArticleQuantity(Long articleId, Integer quantity);
 }
