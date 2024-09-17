@@ -4,8 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.pragma.emazon.stock_microservice.domain.constant.GlobalMessages;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -15,20 +14,14 @@ import java.util.Map;
 public class SecurityExceptionHandler {
 
     @ExceptionHandler(JWTVerificationException.class)
-    public ResponseEntity<Map<String, String>> handleJWTVerificationException(JWTVerificationException e) {
+    public ResponseEntity<Map<String, String>> handleJWTVerificationException(JWTVerificationException ex) {
 
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(GlobalMessages.MESSAGE, e.getMessage()));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(GlobalMessages.MESSAGE, ex.getMessage()));
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException e) {
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAuthorizationDeniedException(AccessDeniedException ex) {
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(GlobalMessages.MESSAGE, e.getMessage()));
-    }
-
-    @ExceptionHandler(AuthorizationDeniedException.class)
-    public ResponseEntity<Map<String, String>> handleAuthorizationDeniedException(AuthorizationDeniedException e) {
-
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(GlobalMessages.MESSAGE, e.getMessage()));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of(GlobalMessages.MESSAGE, ex.getMessage()));
     }
 }
